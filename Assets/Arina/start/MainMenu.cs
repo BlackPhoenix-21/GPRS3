@@ -5,19 +5,18 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [Header("Scene")]
-    [SerializeField] private string gameSceneName = "Level1"; 
+    [SerializeField] private string gameSceneName = "Level1";
 
     [Header("Panels")]
     [SerializeField] private GameObject optionsPanel;
 
     [Header("Audio")]
-    [SerializeField] private Slider volumeSlider;   // необязательно
+    [SerializeField] private Slider volumeSlider;
 
     private void Start()
     {
         if (optionsPanel != null) optionsPanel.SetActive(false);
 
-        // Загружаем сохранённую громкость (если хочешь)
         if (volumeSlider != null)
         {
             float v = PlayerPrefs.GetFloat("volume", 0.8f);
@@ -29,8 +28,11 @@ public class MainMenu : MonoBehaviour
 
     public void OnClickPlay()
     {
-        
-        SceneManager.LoadScene(Level1);
+        // грузим сцену из поля gameSceneName
+        if (!string.IsNullOrEmpty(gameSceneName))
+            SceneManager.LoadScene(gameSceneName);
+        else
+            Debug.LogError("MainMenu: gameSceneName is empty!");
     }
 
     public void OnClickOptions()
@@ -45,7 +47,6 @@ public class MainMenu : MonoBehaviour
 
     public void OnClickExit()
     {
-        // В редакторе это не закроет Play Mode — сработает в билде
         Application.Quit();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
