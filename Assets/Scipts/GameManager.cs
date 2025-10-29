@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); // чтобы не уничтожался при загрузке сцен
+        DontDestroyOnLoad(gameObject);
     }
 }
 

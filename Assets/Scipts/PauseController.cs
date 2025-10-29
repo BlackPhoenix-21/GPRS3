@@ -1,68 +1,105 @@
+using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseController : MonoBehaviour
 {
     public static PauseController Instance { get; private set; }
 
-    [Header("UI ( панель)")]
-    [SerializeField] private GameObject pausePanel;
+    [Header("UI (панель)")]
+    [Tooltip("Prefab for PauseMenu")]
+    public GameObject pausePanelPrefab;
+    [Tooltip("Prefab for OptionsMenu")]
+    public GameObject optionsPanelPrefab;
+    private GameObject pausePanel;
+    private GameObject optionsPanel;
 
-    [Header("Имя сцены с главным меню")]
-    [SerializeField] private string menuSceneName = "start";
+    private bool options = false;
 
-    public bool IsPaused { get; private set; }
+    [Header("Audio")]
+    [Tooltip("Sets Automatic on Start")]
+    public Slider volumeSlider;
+
+    [Header("Menu (Имя сцены с главным меню)")]
+    public string menuSceneName = "start";
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
-        DontDestroyOnLoad(gameObject);          // живём между сценами
-        if (pausePanel != null) pausePanel.SetActive(false);
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
-
-    private void OnSceneLoaded(Scene s, LoadSceneMode m)
-    {
-        // На каждой сцене гарантируем нормальное время и скрытую панель
-        Time.timeScale = 1f;
-        IsPaused = false;
-        if (pausePanel != null) pausePanel.SetActive(false);
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
     {
-        // В меню Esc не нужен
-        if (SceneManager.GetActiveScene().name == menuSceneName) return;
+        if (SceneManager.GetActiveScene().name == menuSceneName)
+            return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
             TogglePause();
     }
 
-    public void TogglePause() { if (IsPaused) Resume(); else Pause(); }
+    private void OnVolumeChanged(float v)
+    {
+        AudioListener.volume = v;
+        PlayerPrefs.SetFloat("volume", v);
+    }
+
+    public void OptionsMenu()
+    {
+        if (options)
+            OpenOptions();
+        else
+            CloseOptions();
+        options = !options;
+    }
+
+    public void CloseOptions()
+    {
+        Destroy(optionsPanel);
+    }
+
+    public void OpenOptions()
+    {
+        optionsPanel = Instantiate(optionsPanelPrefab);
+        volumeSlider = optionsPanel.GetComponentInChildren<Slider>();
+        float v = PlayerPrefs.GetFloat("volume", 0.8f);
+        volumeSlider.value = v;
+        AudioListener.volume = v;
+        volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+    }
+
+    public void TogglePause()
+    {
+        if (GameManager.Instance.isPaused)
+            Resume();
+        else
+            Pause();
+        GameManager.Instance.isPaused = !GameManager.Instance.isPaused;
+    }
 
     public void Pause()
     {
-        if (pausePanel != null) pausePanel.SetActive(true);
+        pausePanel = Instantiate(pausePanelPrefab);
         Time.timeScale = 0f;
-        IsPaused = true;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
     }
 
     public void Resume()
     {
-        if (pausePanel != null) pausePanel.SetActive(false);
+        Destroy(pausePanel);
         Time.timeScale = 1f;
-        IsPaused = false;
     }
 
     public void BackToMenu()
     {
         Resume();
+        GameManager.Instance.isPaused = false;
         SceneManager.LoadScene(menuSceneName);
     }
 }
