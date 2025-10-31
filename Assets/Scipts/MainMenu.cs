@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnClickOptions()
     {
-        GameObject.Find("PausController").GetComponent<PauseController>().OpenOptions();
+        GameObject.Find("PauseController").GetComponent<PauseController>().OpenOptions();
     }
 
     public void OnClickExit()

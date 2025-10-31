@@ -1,5 +1,3 @@
-using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,7 +21,7 @@ public class PauseController : MonoBehaviour
     public Slider volumeSlider;
 
     [Header("Menu (Имя сцены с главным меню)")]
-    public string menuSceneName = "start";
+    public string menuSceneName = "MainMenu";
 
     private void Awake()
     {
