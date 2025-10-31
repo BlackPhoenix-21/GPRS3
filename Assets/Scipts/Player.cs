@@ -1,278 +1,239 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CapsuleCollider2D))]
-public class PlayerController2D : MonoBehaviour
+[RequireComponent(typeof(Collider2D))]
+public class AutoRunnerWithGravity2D : MonoBehaviour
 {
-    [Header("— Движение")]
-    public float maxRunSpeed = 8f;
-    public float accel = 60f;          // разгон на земле
-    public float decel = 70f;          // торможение на земле
-    public float airAccel = 30f;       // управление в воздухе
-    public float airDecel = 30f;
+    [Header("Autorun am Boden")]
+    public float runSpeed = 7f;             // целевая скорость вдоль поверхности
+    public float groundStickForce = 25f;    // прижим к земле (добавочный вниз)
+    public float maxAirControl = 2f;        // контроль в воздухе по X
 
-    [Header("— Прыжок")]
-    public float jumpHeight = 3.5f;    // желаемая высота прыжка (метры)
-    public float coyoteTime = 0.12f;   // «время койота» после срыва с края
-    public float jumpBuffer = 0.12f;   // буфер нажатия до касания земли
-    public float fallGravityMultiplier = 2f;    // усиление гравитации при падении
-    public float lowJumpMultiplier = 2.2f;      // если отпустить кнопку раньше — прыжок короче
+    [Header("Prallen")]
+    public float jumpHeight = 3.2f;
+    public float coyoteTime = 0.12f;
+    public float jumpBuffer = 0.12f;
+    public float fallGravityMult = 1.8f;
+    public float lowJumpMult = 2.0f;
 
-    [Header("— Скольжение (присед)")]
+    [Header("Rutschen/Hocken")]
     public bool enableSlide = true;
-    public float slideSpeedMultiplier = 1.1f;   // небольшое ускорение на старте скольжения
-    public float slideTransitionTime = 0.08f;   // время «сжатия» коллайдера
-    public float crouchHeightPercent = 0.6f;    // во сколько раз уменьшаем высоту
+    public KeyCode crouchKey = KeyCode.S;
+    public float crouchScaleY = 0.7f;
+    public float crouchBlend = 0.08f;
 
-    [Header("— Рывок (Dash)")]
+    [Header("Dash (короткий рывок вперёд)")]
     public bool enableDash = true;
-    public float dashSpeed = 16f;
+    public KeyCode dashKey = KeyCode.LeftShift;
+    public float dashSpeed = 14f;
     public float dashDuration = 0.12f;
-    public float dashCooldown = 0.6f;
-    public float dashGravityScale = 0f;         // во время рывка (0 = без гравитации)
+    public float dashCooldown = 0.5f;
 
-    [Header("— Граундчек")]
-    public Transform groundCheck;
-    public float groundCheckRadius = 0.15f;
+    [Header("Граундчек")]
+    public Transform groundCheck;           // точка под центром
+    public float groundRadius = 0.18f;
     public LayerMask groundMask;
 
-    [Header("— Клавиши (простые)")]
+    [Header("Управление")]
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode dashKey = KeyCode.LeftShift;
-    public KeyCode crouchKey = KeyCode.S; // или стрелка вниз
 
-    // — внутреннее
     Rigidbody2D rb;
-    CapsuleCollider2D col;
+    Collider2D col;
     Vector2 colSizeOrig, colOffsetOrig;
+    float origScaleY;
 
-    float inputX;
-    bool wantJump, wantCrouch, wantDash;
-
-    bool isGrounded;
-    float lastGroundTime; // таймер койота
-    float lastJumpPress;  // буфер прыжка
-
-    bool isCrouching;
-    bool dashReady = true;
-    bool dashing;
-    float dashEndTime;
+    bool grounded;
+    float lastGroundTime;
+    float lastJumpPress;
+    bool wantJump, wantDash, crouching;
+    bool dashing, dashReady = true;
+    float savedGrav;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<CapsuleCollider2D>();
-        colSizeOrig = col.size;
-        colOffsetOrig = col.offset;
+        col = GetComponent<Collider2D>();
+        origScaleY = transform.localScale.y;
+
+#if UNITY_6_0_OR_NEWER
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+#endif
     }
 
     void Update()
     {
-        // — считываем ввод
-        inputX = Input.GetAxisRaw("Horizontal");
-
-        if (Input.GetKeyDown(jumpKey))  lastJumpPress = Time.time;
+        if (Input.GetKeyDown(jumpKey)) lastJumpPress = Time.time;
         wantJump = Input.GetKey(jumpKey);
-
-        wantCrouch = Input.GetKey(crouchKey); // удержание — присед/скольжение
 
         if (enableDash && Input.GetKeyDown(dashKey) && dashReady && !dashing)
             wantDash = true;
+
+        if (enableSlide)
+        {
+            bool wantCrouch = Input.GetKey(crouchKey);
+            if (wantCrouch && !crouching && grounded) StartCoroutine(SetCrouch(true));
+            if ((!wantCrouch || !grounded) && crouching && CanStandUp()) StartCoroutine(SetCrouch(false));
+        }
     }
 
     void FixedUpdate()
     {
-        Debug.Log(rb.linearVelocity);
-
         UpdateGrounded();
 
-        HandleHorizontal();
+        if (!dashing)
+        {
+            if (grounded)
+                MoveAlongGround();  // движение вдоль поверхности + прижим
+            else
+                AirControl();       // небольшой контроль в воздухе
 
-        HandleJump();
-
-        HandleSlide();
+            HandleJump();
+            ApplyBetterJumpGravity();
+        }
 
         HandleDash();
-
-        ApplyBetterJumpGravity();
     }
 
-    #region Ground / Move
-
-    void UpdateGrounded()
+    // --- ДВИЖЕНИЕ ПО ЗЕМЛЕ ---
+    void MoveAlongGround()
     {
-        bool wasGrounded = isGrounded;
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundMask);
+        // Луч вниз, чтобы получить нормаль поверхности
+        RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, groundRadius * 2f, groundMask);
+        if (hit.collider != null)
+        {
+            Vector2 n = hit.normal;
+            Vector2 tangent = new Vector2(n.y, -n.x);     // касательная вправо
+            if (tangent.x < 0f) tangent = -tangent;
 
-        if (isGrounded) lastGroundTime = Time.time;
-        // сбросим «разрешение на рывок» при касании земли
-        if (isGrounded && !wasGrounded) dashReady = true;
+            // целевая скорость вдоль касательной
+            Vector2 targetVel = tangent.normalized * runSpeed;
+            Vector2 vel = rb.linearVelocity;
+
+            // плавно тянем текущую скорость к целевой
+            float lerp = 15f * Time.fixedDeltaTime;
+            vel = Vector2.Lerp(vel, new Vector2(targetVel.x, Mathf.Max(targetVel.y, vel.y)), lerp);
+            rb.linearVelocity = vel;
+
+            // прижим к земле, чтобы не взлетал на неровностях
+            rb.AddForce(-n * groundStickForce, ForceMode2D.Force);
+        }
+        else
+        {
+            // запасной случай: если вдруг не увидели землю — просто держим X
+            rb.linearVelocity = new Vector2(Mathf.Max(rb.linearVelocity.x, runSpeed * 0.8f), rb.linearVelocity.y);
+        }
     }
 
-    void HandleHorizontal()
+    void AirControl()
     {
-        if (dashing) return; // во время даша горизонт не трогаем
-
-        float targetSpeed = inputX * maxRunSpeed;
-
-        // выберем нужные коэффициенты
-        bool moving = Mathf.Abs(targetSpeed) > 0.01f;
-        float accelRate = isGrounded ?
-            (moving ? accel : decel) :
-            (moving ? airAccel : airDecel);
-
-        float speedDiff = targetSpeed - rb.linearVelocity.x;
-        float force = speedDiff * accelRate;
-
-        rb.AddForce(new Vector2(force, 0f));
-
-        // ограничим максимальную скорость по X
-        float vx = Mathf.Clamp(rb.linearVelocity.x, -maxRunSpeed, maxRunSpeed);
-        rb.linearVelocity = new Vector2(vx, rb.linearVelocity.y);
+        // немного тянем X к runSpeed в воздухе, но не сильно
+        float diff = runSpeed - rb.linearVelocity.x;
+        float ax = Mathf.Clamp(diff, -maxAirControl, maxAirControl);
+        rb.AddForce(new Vector2(ax, 0f), ForceMode2D.Force);
     }
 
-    #endregion
-
-    #region Jump
-
+    // --- ПРЫЖОК ---
     void HandleJump()
     {
         bool canCoyote = (Time.time - lastGroundTime) <= coyoteTime;
-        bool buffered = (Time.time - lastJumpPress) <= jumpBuffer;
+        bool buffered  = (Time.time - lastJumpPress) <= jumpBuffer;
 
-        if (buffered && (isGrounded || canCoyote))
+        if (buffered && (grounded || canCoyote))
         {
-            // вычислим вертикальную скорость под желаемую высоту
-            float jumpVel = Mathf.Sqrt(2f * Mathf.Abs(Physics2D.gravity.y) * rb.gravityScale * jumpHeight);
+            float g = Mathf.Abs(Physics2D.gravity.y) * rb.gravityScale;
+            float jumpVel = Mathf.Sqrt(2f * g * jumpHeight);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpVel);
-
-            isGrounded = false;
-            lastJumpPress = -999f; // сброс буфера
+            grounded = false;
+            lastJumpPress = -999f;
         }
     }
 
     void ApplyBetterJumpGravity()
     {
-        if (dashing) return;
-
-        // усиление гравитации при падении
+        // добавочная «улучшенная» гравитация (Unity уже применяет обычную)
         if (rb.linearVelocity.y < -0.01f)
-        {
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallGravityMultiplier - 1f) * rb.gravityScale * Time.fixedDeltaTime;
-        }
-        // «короткий прыжок», если отпустили кнопку вверх
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallGravityMult - 1f) * Time.fixedDeltaTime;
         else if (rb.linearVelocity.y > 0.01f && !wantJump)
-        {
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1f) * rb.gravityScale * Time.fixedDeltaTime;
-        }
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpMult  - 1f) * Time.fixedDeltaTime;
     }
 
-    #endregion
-
-    #region Slide / Crouch
-
-    void HandleSlide()
+    // --- DASH ---
+    void HandleDash()
     {
-        if (!enableSlide) return;
+        if (!enableDash || !wantDash) return;
+        wantDash = false;
+        if (!dashReady) return;
 
-        if (wantCrouch && isGrounded && !isCrouching)
-        {
-            isCrouching = true;
-            // уменьшаем высоту капсулы
-            Vector2 newSize = new Vector2(colSizeOrig.x, colSizeOrig.y * crouchHeightPercent);
-            Vector2 newOffset = new Vector2(colOffsetOrig.x, colOffsetOrig.y * crouchHeightPercent);
-            StopAllCoroutines();
-            StartCoroutine(LerpCollider(col.size, newSize, col.offset, newOffset, slideTransitionTime));
+        dashReady = false;
+        dashing = true;
+        savedGrav = rb.gravityScale;
+        rb.gravityScale = 0f; // на короткое время отключим влияние гравитации
 
-            // лёгкий «пинок» скорости в текущем направлении
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x * slideSpeedMultiplier, rb.linearVelocity.y);
-        }
-        else if ((!wantCrouch || !isGrounded) && isCrouching)
-        {
-            // поднимемся, если над головой пусто
-            if (CanStandUp())
-            {
-                isCrouching = false;
-                StopAllCoroutines();
-                StartCoroutine(LerpCollider(col.size, colSizeOrig, col.offset, colOffsetOrig, slideTransitionTime));
-            }
-        }
+        // мгновенный рывок вперёд по X, Y сохраняем
+        rb.linearVelocity = new Vector2(Mathf.Max(dashSpeed, rb.linearVelocity.x), rb.linearVelocity.y);
+
+        CancelInvoke(nameof(EndDash));
+        Invoke(nameof(EndDash), dashDuration);
     }
 
-    System.Collections.IEnumerator LerpCollider(Vector2 fromSize, Vector2 toSize, Vector2 fromOff, Vector2 toOff, float t)
+    void EndDash()
     {
-        float time = 0f;
-        while (time < t)
+        dashing = false;
+        rb.gravityScale = savedGrav;
+        CancelInvoke(nameof(ResetDash));
+        Invoke(nameof(ResetDash), dashCooldown);
+    }
+    void ResetDash() => dashReady = true;
+
+    // --- ГРАУНДЧЕК ---
+    void UpdateGrounded()
+    {
+        bool was = grounded;
+        grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundMask);
+        if (grounded) lastGroundTime = Time.time;
+        if (grounded && !was) dashReady = true;
+    }
+
+    // --- Присед/скольжение ---
+    IEnumerator SetCrouch(bool on)
+    {
+        if (!enableSlide) yield break;
+        crouching = on;
+
+        // плавное масштабирование по Y (визуально) — коллайдеры остаются, или можете
+        // заменить на работу с CapsuleCollider2D.size/offset при желании
+        float from = transform.localScale.y;
+        float to = on ? origScaleY * crouchScaleY : origScaleY;
+
+        float t = 0f;
+        while (t < crouchBlend)
         {
-            float k = time / t;
-            col.size = Vector2.Lerp(fromSize, toSize, k);
-            col.offset = Vector2.Lerp(fromOff, toOff, k);
-            time += Time.fixedDeltaTime;
+            float k = t / crouchBlend;
+            Vector3 s = transform.localScale;
+            s.y = Mathf.Lerp(from, to, k);
+            transform.localScale = s;
+            t += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
-        col.size = toSize;
-        col.offset = toOff;
+        Vector3 ss = transform.localScale;
+        ss.y = to; transform.localScale = ss;
     }
 
     bool CanStandUp()
     {
-        // простой чек «есть ли потолок» — луч вверх на половину роста
-        float castDist = colSizeOrig.y * 0.55f;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, castDist, groundMask);
-        return hit.collider == null;
+        // небольшой луч вверх — нет ли потолка
+        float cast = 0.6f;
+        return !Physics2D.Raycast(transform.position, Vector2.up, cast, groundMask);
     }
 
-    #endregion
-
-    #region Dash
-
-    void HandleDash()
-    {
-        if (!enableDash) return;
-
-        if (wantDash)
-        {
-            wantDash = false;
-            if (!dashReady) return;
-
-            dashReady = false;
-            dashing = true;
-            dashEndTime = Time.time + dashDuration;
-
-            // направление — куда смотрим/движемся; если стоим — берём вправо
-            float dir = Mathf.Abs(inputX) > 0.1f ? Mathf.Sign(inputX) : (transform.localScale.x >= 0 ? 1f : -1f);
-
-            // сохраняем старую граву, отключаем на время рывка
-            float oldGrav = rb.gravityScale;
-            rb.gravityScale = dashGravityScale;
-
-            // мгновенный рывок по X
-            rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
-
-            // таймер завершения
-            Invoke(nameof(EndDash), dashDuration);
-
-            // локальная функция
-            void EndDash()
-            {
-                dashing = false;
-                rb.gravityScale = oldGrav;
-                // кулдаун
-                Invoke(nameof(ResetDash), dashCooldown);
-            }
-        }
-    }
-
-    void ResetDash() => dashReady = true;
-
-    #endregion
-
+#if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
-        if (groundCheck)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
+        if (!groundCheck) return;
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
     }
+#endif
 }
