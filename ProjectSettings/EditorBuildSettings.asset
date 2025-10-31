@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Arina/start/start.unity
+    path: Assets/Scenes/start.unity
     guid: fdf17695a6c9b2e4c86feb01bdcd8b9c
   - enabled: 1
-    path: Assets/Arina/start/Level1.unity
+    path: Assets/Scenes/Level1.unity
     guid: 69ac7b4e71fccb743addea3722554901
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
