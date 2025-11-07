@@ -5,45 +5,51 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Platform : MonoBehaviour
 {
-    public enum Mode { Break, SlowPlayer }   
+    public enum Mode { Break, SlowPlayer }
     public Mode mode = Mode.Break;
 
-    [Header("Общее")]
+    [Header("Algemein")]
     public string playerTag = "Player";
     public Color warnColor = Color.red;
 
-    // --- Break ---
-    [Header("Break ")]
-    public float breakDelay = 3f;      
-        public float fallGravity = 3f;     
+
+    [Header("Break")]
+    public float breakDelay = 3f;     
+    public float fallGravity = 3f;    
     public float destroyDelay = 5f;  
 
-    // --- SlowPlayer ---
-    [Header("SlowPlayer ")]
-    [Range(0.1f, 1f)] public float slowMultiplier = 0.5f; // 0.5 = в 2 раза медленнее
-    public float slowDuration = 1.5f;                    
-    public float extraDrag = 5f;                          
+    //SlowPlayer
+    [Header("SlowPlayer")]
+    [Range(0.1f, 1f)] public float slowMultiplier = 0.5f;
+    public float slowDuration = 1.5f;
+    public float extraDrag = 5f;
 
- 
     SpriteRenderer _sr;
     BoxCollider2D _col;
-    Rigidbody2D _rbPlatform;      
+    Rigidbody2D _rbPlatform; 
     Color _origColor;
     bool _busy;
-
+   
+[Header("Auto Layer")]
+[SerializeField] bool autoSetGroundLayer = true;
+[SerializeField] string groundLayerName = "Ground";
     void Awake()
+{
+    
+    _sr  = GetComponent<SpriteRenderer>();
+    _col = GetComponent<BoxCollider2D>();
+    _origColor = _sr.color;
+
+    _rbPlatform = GetComponent<Rigidbody2D>();
+    if (_rbPlatform != null) _rbPlatform.simulated = false;
+
+    
+    if (autoSetGroundLayer)
     {
-        _sr  = GetComponent<SpriteRenderer>();
-        _col = GetComponent<BoxCollider2D>();
-        _origColor = _sr.color;
-
-        
-        _rbPlatform = GetComponent<Rigidbody2D>();
-        if (_rbPlatform == null) _rbPlatform = gameObject.AddComponent<Rigidbody2D>();
-        _rbPlatform.bodyType = RigidbodyType2D.Kinematic;
-        _rbPlatform.simulated = false; 
+        int layer = LayerMask.NameToLayer(groundLayerName);
+        if (layer >= 0) gameObject.layer = layer;
     }
-
+}
     [System.Obsolete]
     void OnCollisionEnter2D(Collision2D c)
     {
@@ -60,12 +66,11 @@ public class Platform : MonoBehaviour
         }
     }
 
-    // ---------- BREAK ----------
     IEnumerator BreakRoutine()
     {
         _busy = true;
 
-        // простое предупреждающее мигание
+        // Предупреждающее мигание
         float t = 0f;
         while (t < breakDelay)
         {
@@ -75,9 +80,9 @@ public class Platform : MonoBehaviour
             yield return null;
         }
         _sr.color = _origColor;
-
-        // «ломаемся»: выключаем коллайдер, включаем физику и падаем
         _col.enabled = false;
+
+        if (_rbPlatform == null) _rbPlatform = gameObject.AddComponent<Rigidbody2D>();
         _rbPlatform.simulated = true;
         _rbPlatform.bodyType = RigidbodyType2D.Dynamic;
         _rbPlatform.gravityScale = fallGravity;
@@ -95,15 +100,12 @@ public class Platform : MonoBehaviour
 
         while (timer > 0f)
         {
-            // усилим сопротивление и подрезаем горизонтальную скорость
             playerRb.drag = extraDrag;
             playerRb.velocity = new Vector2(playerRb.velocity.x * slowMultiplier, playerRb.velocity.y);
-
             timer -= Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
-        // вернуть параметры игроку
         playerRb.drag = originalDrag;
     }
 }
