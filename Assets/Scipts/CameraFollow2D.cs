@@ -33,7 +33,7 @@ public class CameraFollow2D : MonoBehaviour
         // look-ahead по скорости, если указан Rigidbody2D
         if (targetRb)
         {
-            Vector2 v = targetRb.linearVelocity; // Unity 6+
+            Vector2 v = targetRb.linearVelocity; 
             desired += (Vector3)(v * lookAheadScale);
         }
 
