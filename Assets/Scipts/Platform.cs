@@ -14,9 +14,9 @@ public class Platform : MonoBehaviour
 
 
     [Header("Break")]
-    public float breakDelay = 3f;     
-    public float fallGravity = 3f;    
-    public float destroyDelay = 5f;  
+    public float breakDelay = 3f;
+    public float fallGravity = 3f;
+    public float destroyDelay = 5f;
 
     //SlowPlayer
     [Header("SlowPlayer")]
@@ -26,31 +26,31 @@ public class Platform : MonoBehaviour
 
     SpriteRenderer _sr;
     BoxCollider2D _col;
-    Rigidbody2D _rbPlatform; 
+    Rigidbody2D _rbPlatform;
     Color _origColor;
     bool _busy;
-   
-[Header("Auto Layer")]
-[SerializeField] bool autoSetGroundLayer = true;
-[SerializeField] string groundLayerName = "Ground";
+
+    [Header("Auto Layer")]
+    public bool autoSetGroundLayer = true;
+    public LayerMask groundLayer;
+
     void Awake()
-{
-    
-    _sr  = GetComponent<SpriteRenderer>();
-    _col = GetComponent<BoxCollider2D>();
-    _origColor = _sr.color;
-
-    _rbPlatform = GetComponent<Rigidbody2D>();
-    if (_rbPlatform != null) _rbPlatform.simulated = false;
-
-    
-    if (autoSetGroundLayer)
     {
-        int layer = LayerMask.NameToLayer(groundLayerName);
-        if (layer >= 0) gameObject.layer = layer;
+
+        _sr = GetComponent<SpriteRenderer>();
+        _col = GetComponent<BoxCollider2D>();
+        _origColor = _sr.color;
+
+        _rbPlatform = GetComponent<Rigidbody2D>();
+        if (_rbPlatform != null) _rbPlatform.simulated = false;
+
+
+        if (autoSetGroundLayer)
+        {
+            gameObject.layer = groundLayer;
+        }
     }
-}
-    [System.Obsolete]
+
     void OnCollisionEnter2D(Collision2D c)
     {
         if (!c.collider.CompareTag(playerTag)) return;
@@ -92,20 +92,20 @@ public class Platform : MonoBehaviour
     }
 
     // ---------- SLOW PLAYER ----------
-    [System.Obsolete]
+
     IEnumerator SlowRoutine(Rigidbody2D playerRb)
     {
-        float timer = slowDuration;
-        float originalDrag = playerRb.drag;
+        //float timer = slowDuration;
+        //float originalDrag = playerRb.drag;
 
-        while (timer > 0f)
-        {
-            playerRb.drag = extraDrag;
-            playerRb.velocity = new Vector2(playerRb.velocity.x * slowMultiplier, playerRb.velocity.y);
-            timer -= Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
-        }
+        //while (timer > 0f)
+        //{
+        //    playerRb.drag = extraDrag;
+        //    playerRb.velocity = new Vector2(playerRb.velocity.x * slowMultiplier, playerRb.velocity.y);
+        //    timer -= Time.fixedDeltaTime;
+        yield return new WaitForFixedUpdate();
+        //}
 
-        playerRb.drag = originalDrag;
+        //playerRb.drag = originalDrag;
     }
 }
