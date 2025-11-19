@@ -17,8 +17,9 @@ public class Platform : MonoBehaviour
     public Color warnColor = Color.red;
 
     [Header("SlowPlayer")]
+    [Tooltip("0 = Slow, 1 = normal Speed")]
     [Range(0.1f, 1f)] public float slowMultiplier = 0.5f;
-    public float slowDuration = 1.5f;
+    //public float slowDuration = 1.5f;
 
     private SpriteRenderer spriteR;
     private Rigidbody2D rbPlatform;
@@ -70,8 +71,12 @@ public class Platform : MonoBehaviour
             PlayerMovement pM = c.gameObject.GetComponent<PlayerMovement>();
             runSpeed = pM.runSpeed;
             dashSpeed = pM.dashSpeed;
+            Debug.Log(pM.runSpeed);
+            Debug.Log(pM.dashSpeed);
             pM.runSpeed *= slowMultiplier;
             pM.dashSpeed *= slowMultiplier;
+            Debug.Log(pM.runSpeed);
+            Debug.Log(pM.dashSpeed);
         }
     }
 

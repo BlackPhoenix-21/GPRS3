@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PausePanel
   - GroundCheck
+  - Wall
   layers:
   - Default
   - TransparentFX

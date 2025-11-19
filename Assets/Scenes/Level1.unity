@@ -699,7 +699,7 @@ MonoBehaviour:
   cycleTime: 0.1
   destroyDelay: 5
   warnColor: {r: 1, g: 0, b: 0, a: 1}
-  slowMultiplier: 0.5
+  slowMultiplier: 0.1
   slowDuration: 1.5
   autoSetGroundLayer: 1
   groundLayer:

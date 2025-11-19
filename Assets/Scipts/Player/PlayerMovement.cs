@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public LayerMask groundMask;
     public float groundCheckDistance = 0.1f;
-    public RaycastHit2D[] groundHits;
+    private RaycastHit2D[] groundHits;
 
     private Rigidbody2D rb;
     private int dir = 1;
@@ -40,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDashing = false;
     private float dashTimeLeft = 0f;
+    private int moveable = 0;
+    public float wallCheckDistance = 0.1f;
+    private RaycastHit2D[] wallHits;
 
     void Awake()
     {
@@ -51,10 +54,24 @@ public class PlayerMovement : MonoBehaviour
         IsGrounded();
 
         int horizontalInput = 0;
-        if (Input.GetKey(leftKey))
-            horizontalInput = -1;
-        if (Input.GetKey(rightKey))
-            horizontalInput = 1;
+        if (moveable == 0)
+        {
+            if (Input.GetKey(leftKey))
+                horizontalInput = -1;
+            if (Input.GetKey(rightKey))
+                horizontalInput = 1;
+        }
+        else if (moveable == 1)
+        {
+            if (Input.GetKey(leftKey))
+                horizontalInput = -1;
+        }
+        else if (moveable == -1)
+        {
+            if (Input.GetKey(rightKey))
+                horizontalInput = 1;
+        }
+
 
         if (horizontalInput != 0)
             dir = horizontalInput;
@@ -115,6 +132,42 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(baseSpeed, currentVel.y);
         }
+    }
+
+    private void OnCollisionStay2D(Collision2D c)
+    {
+        if (c.transform.CompareTag("Wall"))
+        {
+            Debug.Log("Hit");
+            float dis = transform.position.y - c.transform.position.y * -1;
+            Debug.Log(dis);
+            bool stuck;
+            Collider2D col = GetComponent<Collider2D>();
+            float colLenght = col != null ? col.bounds.size.x * 0.51f : 0.01f;
+            Vector2 pos = new Vector2(transform.position.x - colLenght, transform.position.y + dis);
+
+            wallHits = Physics2D.RaycastAll(pos, Vector2.down, wallCheckDistance, groundMask);
+            stuck = wallHits != null && wallHits.Length > 0;
+
+            if (stuck)
+            {
+                Debug.Log("-1");
+                moveable = -1;
+                return;
+            }
+            pos = new Vector2(transform.position.x + colLenght, transform.position.y + dis);
+
+            wallHits = Physics2D.RaycastAll(pos, Vector2.down, wallCheckDistance, groundMask);
+            stuck = wallHits != null && wallHits.Length > 0;
+            if (stuck)
+            {
+                Debug.Log("1");
+                moveable = 1;
+                return;
+            }
+
+        }
+        moveable = 0;
     }
 
     private void IsGrounded()
