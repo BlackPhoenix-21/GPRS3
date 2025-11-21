@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode leftKey = KeyCode.A;
     public KeyCode rightKey = KeyCode.D;
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode crouchKey = KeyCode.LeftShift;
     public KeyCode dashKey = KeyCode.LeftControl;
 
     [Header("Bewegungswerte")]
@@ -42,8 +41,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing = false;
     private float dashTimeLeft = 0f;
     private int moveable = 0;
-    public float wallCheckDistance = 0.1f;
-    private RaycastHit2D[] wallHits;
 
     private int horizontalInput = 0;
     private bool jumpPressed = false;
@@ -91,17 +88,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Dash");
         }
 
-        if (Input.GetKeyDown(crouchKey))
-        {
-            Crouch(true);
-            Debug.Log("CrouchOn");
-        }
-        else if (Input.GetKeyUp(crouchKey))
-        {
-            Crouch(false);
-            Debug.Log("CrouchOff");
-        }
-
         // Dash-Timer
         if (isDashing)
         {
@@ -113,11 +99,6 @@ public class PlayerMovement : MonoBehaviour
         // Cooldowns
         timerDash -= Time.deltaTime;
         timerDoubleJump -= Time.deltaTime;
-
-        if (timerDoubleJump < 0 && grounded)
-        {
-            enableDoubleJump = true;
-        }
     }
 
     void FixedUpdate()
@@ -211,28 +192,7 @@ public class PlayerMovement : MonoBehaviour
 
         groundHits = Physics2D.RaycastAll(pos, Vector2.down, groundCheckDistance, groundMask);
 
-        grounded = groundHits != null && groundHits.Length > 0;
-
-        // Debug: Anzahl und erste Collider-Info (nur im Editor sinnvoll)
-        //if (groundHits != null && groundHits.Length > 0)
-        //{
-        //    Debug.Log($"Ground hits: {groundHits.Length} -> {groundHits[0].collider}");
-        //}
-        //else
-        //{
-        //    Debug.Log("Ground hits: 0");
-        //}
-    }
-
-    private void Crouch(bool down)
-    {
-        if (!grounded || !down)
-        {
-            StartCoroutine(CanStandUp());
-            return;
-        }
-        // Speed langsamer?
-        // Animation
+        grounded = groundHits.Length > 0;
     }
 
     private void Dash()
@@ -267,17 +227,5 @@ public class PlayerMovement : MonoBehaviour
                 // Animation
             }
         }
-    }
-
-    private IEnumerator CanStandUp()
-    {
-        float rayLength = GetComponent<Collider2D>() != null ? GetComponent<Collider2D>().bounds.size.y : 1f;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, rayLength);
-        while (hit.collider != null)
-        {
-            yield return new WaitForSeconds(0.1f);
-            hit = Physics2D.Raycast(transform.position, Vector2.up, rayLength);
-        }
-        // Animation
     }
 }

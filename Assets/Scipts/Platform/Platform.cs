@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -19,13 +18,12 @@ public class Platform : MonoBehaviour
     [Header("SlowPlayer")]
     [Tooltip("0 = Slow, 1 = normal Speed")]
     [Range(0.1f, 1f)] public float slowMultiplier = 0.5f;
-    //public float slowDuration = 1.5f;
 
     private SpriteRenderer spriteR;
     private Rigidbody2D rbPlatform;
     private bool busy;
     private float runSpeed;
-    private float dashSpeed;
+    private float dashForce;
 
     [Header("Auto Layer")]
     public bool autoSetGroundLayer = true;
@@ -70,24 +68,20 @@ public class Platform : MonoBehaviour
         {
             PlayerMovement pM = c.gameObject.GetComponent<PlayerMovement>();
             runSpeed = pM.runSpeed;
-            dashSpeed = pM.dashSpeed;
-            Debug.Log(pM.runSpeed);
-            Debug.Log(pM.dashSpeed);
+            dashForce = pM.dashForce;
+
             pM.runSpeed *= slowMultiplier;
-            pM.dashSpeed *= slowMultiplier;
-            Debug.Log(pM.runSpeed);
-            Debug.Log(pM.dashSpeed);
+            pM.dashForce *= slowMultiplier;
         }
     }
 
     private void OnCollisionExit2D(Collision2D c)
     {
-        if (mode == Mode.SlowPlayer)
+        if (mode == Mode.SlowPlayer && c.collider.CompareTag("Player"))
         {
-            // Vllt kurzer delay?
             PlayerMovement pM = c.gameObject.GetComponent<PlayerMovement>();
             pM.runSpeed = runSpeed;
-            pM.dashSpeed = dashSpeed;
+            pM.dashForce = dashForce;
         }
     }
 
