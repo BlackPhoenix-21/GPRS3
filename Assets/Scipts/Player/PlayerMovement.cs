@@ -31,7 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit2D[] groundHits;
 
     private Rigidbody2D rb;
-    private int dir = 1;
+    [HideInInspector]
+    public int dir = 1;
 
     [Header("Debug Information")]
     public bool grounded;
@@ -96,6 +97,11 @@ public class PlayerMovement : MonoBehaviour
                 isDashing = false;
         }
 
+        if (grounded && timerDoubleJump < 0)
+        {
+            enableDoubleJump = true;
+        }
+
         // Cooldowns
         timerDash -= Time.deltaTime;
         timerDoubleJump -= Time.deltaTime;
@@ -103,41 +109,34 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Ground Check (verwendet Physics, sollte in FixedUpdate sein)
         IsGrounded();
 
-        // Sprung verarbeiten
         if (jumpPressed)
         {
             Jump();
             jumpPressed = false;
         }
 
-        // Dash verarbeiten
         if (dashPressed)
         {
             Dash();
             dashPressed = false;
         }
 
-        // Physik-basierte Bewegung
         float moveMultiplier = grounded ? 1f : airMovement;
         float targetSpeed = horizontalInput * runSpeed * moveMultiplier;
 
         if (isDashing)
         {
-            // Beim Dash: Zusätzliche Force in Dash-Richtung
             float dashVel = dashForce * dir;
             rb.AddForce(new Vector2(dashVel, 0f), ForceMode2D.Force);
         }
 
-        // Horizontale Bewegung mit AddForce
         float speedDifference = targetSpeed - rb.linearVelocity.x;
         float movement = speedDifference * runSpeed;
 
         rb.AddForce(new Vector2(movement, 0f), ForceMode2D.Force);
 
-        // Geschwindigkeitsbegrenzung
         if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed && !isDashing)
         {
             rb.linearVelocity = new Vector2(Mathf.Sign(rb.linearVelocity.x) * maxSpeed, rb.linearVelocity.y);
@@ -210,7 +209,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (grounded)
         {
-            // Vertikale Geschwindigkeit zurücksetzen und Sprungkraft anwenden
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             // Animation
@@ -219,7 +217,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (enableDoubleJump)
             {
-                // Vertikale Geschwindigkeit zurücksetzen und Double-Jump-Kraft anwenden
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
                 rb.AddForce(new Vector2(0f, doubleJumpForce), ForceMode2D.Impulse);
                 enableDoubleJump = false;

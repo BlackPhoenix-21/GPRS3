@@ -183,13 +183,13 @@ MonoBehaviour:
   leftKey: 97
   rightKey: 100
   jumpKey: 32
-  crouchKey: 304
   dashKey: 306
   runSpeed: 15
-  jumpHeight: 10
-  doubleJumpHeight: 7
-  dashSpeed: 20
+  jumpForce: 7.5
+  doubleJumpForce: 7.5
+  dashForce: 400
   airMovement: 0.5
+  maxSpeed: 15
   dashDuration: 0.12
   dashCooldown: 2.5
   enableDoubleJump: 1
@@ -201,4 +201,3 @@ MonoBehaviour:
   grounded: 0
   timerDash: 0
   timerDoubleJump: 0
-  wallCheckDistance: 0.1
