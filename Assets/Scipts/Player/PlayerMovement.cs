@@ -12,10 +12,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Bewegungswerte")]
     public float runSpeed = 15f;
-    public float jumpHeight = 7f;
-    public float doubleJumpHeight = 7f;
-    public float dashSpeed = 20f;
+    public float jumpForce = 7f;
+    public float doubleJumpForce = 7f;
+    public float dashForce = 20f;
     public float airMovement = 0.5f;
+    public float maxSpeed = 15f;
 
     [Header("Dash")]
     public float dashDuration = 0.12f;
@@ -44,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
     public float wallCheckDistance = 0.1f;
     private RaycastHit2D[] wallHits;
 
+    private int horizontalInput = 0;
+    private bool jumpPressed = false;
+    private bool dashPressed = false;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -51,9 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        IsGrounded();
-
-        int horizontalInput = 0;
+        // Input-Handling
+        horizontalInput = 0;
         if (moveable == 0)
         {
             if (Input.GetKey(leftKey))
@@ -72,30 +76,33 @@ public class PlayerMovement : MonoBehaviour
                 horizontalInput = 1;
         }
 
-
         if (horizontalInput != 0)
             dir = horizontalInput;
 
         if (Input.GetKeyDown(jumpKey))
-            Jump();
-
-        if (Input.GetKeyDown(dashKey))
-            Dash();
-
-        if (Input.GetKeyDown(crouchKey))
-            Crouch(true);
-        else if (Input.GetKeyUp(crouchKey))
-            Crouch(false);
-
-        if (Input.GetKeyDown(jumpKey))
+        {
+            jumpPressed = true;
             Debug.Log("Jump");
-        if (Input.GetKeyDown(dashKey))
-            Debug.Log("Dash");
-        if (Input.GetKeyDown(crouchKey))
-            Debug.Log("CrouchOn");
-        else if (Input.GetKeyUp(crouchKey))
-            Debug.Log("CrouchOff");
+        }
 
+        if (Input.GetKeyDown(dashKey))
+        {
+            dashPressed = true;
+            Debug.Log("Dash");
+        }
+
+        if (Input.GetKeyDown(crouchKey))
+        {
+            Crouch(true);
+            Debug.Log("CrouchOn");
+        }
+        else if (Input.GetKeyUp(crouchKey))
+        {
+            Crouch(false);
+            Debug.Log("CrouchOff");
+        }
+
+        // Dash-Timer
         if (isDashing)
         {
             dashTimeLeft -= Time.deltaTime;
@@ -111,26 +118,48 @@ public class PlayerMovement : MonoBehaviour
         {
             enableDoubleJump = true;
         }
+    }
 
-        Vector2 currentVel = rb.linearVelocity;
-        float baseSpeed;
-        if (grounded)
+    void FixedUpdate()
+    {
+        // Ground Check (verwendet Physics, sollte in FixedUpdate sein)
+        IsGrounded();
+
+        // Sprung verarbeiten
+        if (jumpPressed)
         {
-            baseSpeed = horizontalInput * runSpeed;
+            Jump();
+            jumpPressed = false;
         }
-        else
+
+        // Dash verarbeiten
+        if (dashPressed)
         {
-            baseSpeed = horizontalInput * runSpeed * airMovement;
+            Dash();
+            dashPressed = false;
         }
+
+        // Physik-basierte Bewegung
+        float moveMultiplier = grounded ? 1f : airMovement;
+        float targetSpeed = horizontalInput * runSpeed * moveMultiplier;
 
         if (isDashing)
         {
-            float dashVel = dashSpeed * dir;
-            rb.linearVelocity = new Vector2(baseSpeed + dashVel, currentVel.y);
+            // Beim Dash: Zusätzliche Force in Dash-Richtung
+            float dashVel = dashForce * dir;
+            rb.AddForce(new Vector2(dashVel, 0f), ForceMode2D.Force);
         }
-        else
+
+        // Horizontale Bewegung mit AddForce
+        float speedDifference = targetSpeed - rb.linearVelocity.x;
+        float movement = speedDifference * runSpeed;
+
+        rb.AddForce(new Vector2(movement, 0f), ForceMode2D.Force);
+
+        // Geschwindigkeitsbegrenzung
+        if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed && !isDashing)
         {
-            rb.linearVelocity = new Vector2(baseSpeed, currentVel.y);
+            rb.linearVelocity = new Vector2(Mathf.Sign(rb.linearVelocity.x) * maxSpeed, rb.linearVelocity.y);
         }
     }
 
@@ -138,36 +167,40 @@ public class PlayerMovement : MonoBehaviour
     {
         if (c.transform.CompareTag("Wall"))
         {
-            Debug.Log("Hit");
-            float dis = transform.position.y - c.transform.position.y * -1;
-            Debug.Log(dis);
-            bool stuck;
-            Collider2D col = GetComponent<Collider2D>();
-            float colLenght = col != null ? col.bounds.size.x * 0.51f : 0.01f;
-            Vector2 pos = new Vector2(transform.position.x - colLenght, transform.position.y + dis);
+            // Bestimme die Richtung der Kollision basierend auf Kontaktpunkten
+            Vector2 contactPoint = c.contacts[0].point;
+            Vector2 playerPos = transform.position;
 
-            wallHits = Physics2D.RaycastAll(pos, Vector2.down, wallCheckDistance, groundMask);
-            stuck = wallHits != null && wallHits.Length > 0;
+            // Prüfe ob die Wand links oder rechts vom Spieler ist
+            float horizontalDiff = contactPoint.x - playerPos.x;
 
-            if (stuck)
+            if (horizontalDiff < -0.1f)
             {
-                Debug.Log("-1");
+                // Wand ist links, blockiere Bewegung nach links
                 moveable = -1;
-                return;
             }
-            pos = new Vector2(transform.position.x + colLenght, transform.position.y + dis);
-
-            wallHits = Physics2D.RaycastAll(pos, Vector2.down, wallCheckDistance, groundMask);
-            stuck = wallHits != null && wallHits.Length > 0;
-            if (stuck)
+            else if (horizontalDiff > 0.1f)
             {
-                Debug.Log("1");
+                // Wand ist rechts, blockiere Bewegung nach rechts
                 moveable = 1;
-                return;
             }
-
+            else
+            {
+                moveable = 0;
+            }
         }
-        moveable = 0;
+        else
+        {
+            moveable = 0;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D c)
+    {
+        if (c.transform.CompareTag("Wall"))
+        {
+            moveable = 0;
+        }
     }
 
     private void IsGrounded()
@@ -217,14 +250,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (grounded)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpHeight);
+            // Vertikale Geschwindigkeit zurücksetzen und Sprungkraft anwenden
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             // Animation
         }
         else
         {
             if (enableDoubleJump)
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, doubleJumpHeight);
+                // Vertikale Geschwindigkeit zurücksetzen und Double-Jump-Kraft anwenden
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+                rb.AddForce(new Vector2(0f, doubleJumpForce), ForceMode2D.Impulse);
                 enableDoubleJump = false;
                 timerDoubleJump = doubleJumpCooldown;
                 // Animation
