@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Tastenbelegung")]
-    public KeyCode leftKey = KeyCode.A;
-    public KeyCode rightKey = KeyCode.D;
-    public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode dashKey = KeyCode.LeftControl;
+    [Header("Input System")]
+    public InputActionReference move;   
+    public InputActionReference jump;   
+    public InputActionReference dash;   
 
     [Header("Bewegungswerte")]
     public float runSpeed = 15f;
@@ -22,22 +22,20 @@ public class PlayerMovement : MonoBehaviour
     public float dashCooldown = 2.5f;
 
     [Header("Double Jump")]
-    public bool enableDoubleJump = true;
-    public float doubleJumpCooldown = 0.5f;
+    public bool enableDoubleJump = true;    
+    public float doubleJumpCooldown = 0.5f;  
 
     [Header("Ground Check")]
     public LayerMask groundMask;
-    public float groundCheckDistance = 0.1f;
-    private RaycastHit2D[] groundHits;
-
+    public float groundCheckDistance = 0.3f;
     private Rigidbody2D rb;
-    [HideInInspector]
-    public int dir = 1;
 
     [Header("Debug Information")]
     public bool grounded;
     public float timerDash;
     public float timerDoubleJump;
+
+    [HideInInspector] public int dir = 1;
 
     private bool isDashing = false;
     private float dashTimeLeft = 0f;
@@ -47,49 +45,57 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpPressed = false;
     private bool dashPressed = false;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void OnEnable()
     {
-        // Input-Handling
+        move.action.Enable();
+        jump.action.Enable();
+        dash.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        move.action.Disable();
+        jump.action.Disable();
+        dash.action.Disable();
+    }
+
+    private void Update()
+    {
+        
+        Vector2 moveInput = move.action.ReadValue<Vector2>();
+        float inputX = moveInput.x;   // -1 .. 1
+        float deadZone = 0.1f;
+
         horizontalInput = 0;
+
         if (moveable == 0)
         {
-            if (Input.GetKey(leftKey))
-                horizontalInput = -1;
-            if (Input.GetKey(rightKey))
-                horizontalInput = 1;
+            if (inputX > deadZone)      horizontalInput = 1;
+            else if (inputX < -deadZone) horizontalInput = -1;
         }
-        else if (moveable == 1)
+        else if (moveable == 1)         
         {
-            if (Input.GetKey(leftKey))
-                horizontalInput = -1;
+            if (inputX < -deadZone)     horizontalInput = -1;
         }
-        else if (moveable == -1)
+        else if (moveable == -1)      
         {
-            if (Input.GetKey(rightKey))
-                horizontalInput = 1;
+            if (inputX > deadZone)      horizontalInput = 1;
         }
 
         if (horizontalInput != 0)
             dir = horizontalInput;
 
-        if (Input.GetKeyDown(jumpKey))
-        {
+        if (jump.action.WasPressedThisFrame())
             jumpPressed = true;
-            Debug.Log("Jump");
-        }
 
-        if (Input.GetKeyDown(dashKey))
-        {
+        if (dash.action.WasPressedThisFrame())
             dashPressed = true;
-            Debug.Log("Dash");
-        }
 
-        // Dash-Timer
         if (isDashing)
         {
             dashTimeLeft -= Time.deltaTime;
@@ -97,17 +103,18 @@ public class PlayerMovement : MonoBehaviour
                 isDashing = false;
         }
 
-        if (grounded && timerDoubleJump < 0)
-        {
-            enableDoubleJump = true;
-        }
+       
+        if (!grounded && !enableDoubleJump && timerDoubleJump > 0f)
+            timerDoubleJump -= Time.deltaTime;
 
-        // Cooldowns
+       
+        if (grounded && timerDoubleJump <= 0f)
+            enableDoubleJump = true;
+
         timerDash -= Time.deltaTime;
-        timerDoubleJump -= Time.deltaTime;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         IsGrounded();
 
@@ -139,7 +146,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed && !isDashing)
         {
-            rb.linearVelocity = new Vector2(Mathf.Sign(rb.linearVelocity.x) * maxSpeed, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(
+                Mathf.Sign(rb.linearVelocity.x) * maxSpeed,
+                rb.linearVelocity.y
+            );
         }
     }
 
@@ -147,27 +157,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (c.transform.CompareTag("Wall"))
         {
-            // Bestimme die Richtung der Kollision basierend auf Kontaktpunkten
             Vector2 contactPoint = c.contacts[0].point;
             Vector2 playerPos = transform.position;
-
-            // Prüfe ob die Wand links oder rechts vom Spieler ist
             float horizontalDiff = contactPoint.x - playerPos.x;
 
             if (horizontalDiff < -0.1f)
-            {
-                // Wand ist links, blockiere Bewegung nach links
-                moveable = -1;
-            }
+                moveable = -1; 
             else if (horizontalDiff > 0.1f)
-            {
-                // Wand ist rechts, blockiere Bewegung nach rechts
-                moveable = 1;
-            }
+                moveable = 1;  
             else
-            {
                 moveable = 0;
-            }
         }
         else
         {
@@ -178,20 +177,29 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionExit2D(Collision2D c)
     {
         if (c.transform.CompareTag("Wall"))
-        {
             moveable = 0;
-        }
     }
 
     private void IsGrounded()
     {
         Collider2D col = GetComponent<Collider2D>();
-        float colLenght = col != null ? col.bounds.size.y * 0.51f : 0.01f;
-        Vector2 pos = new Vector2(transform.position.x, transform.position.y - colLenght);
+        if (col == null)
+        {
+            grounded = false;
+            return;
+        }
 
-        groundHits = Physics2D.RaycastAll(pos, Vector2.down, groundCheckDistance, groundMask);
+     
+        Vector2 origin = col.bounds.center;
+    
+        float rayLength = col.bounds.extents.y + groundCheckDistance;
 
-        grounded = groundHits.Length > 0;
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, rayLength, groundMask);
+
+        grounded = hit.collider != null;
+
+       
+        Debug.DrawRay(origin, Vector2.down * rayLength, grounded ? Color.green : Color.red);
     }
 
     private void Dash()
@@ -202,27 +210,29 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         dashTimeLeft = dashDuration;
         timerDash = dashCooldown;
-        // Animation
+        // TODO: animation
     }
 
+   
     private void Jump()
     {
         if (grounded)
         {
+          
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            // Animation
+
+            enableDoubleJump = true;
+            timerDoubleJump = doubleJumpCooldown;
         }
-        else
+        else if (enableDoubleJump)
         {
-            if (enableDoubleJump)
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
-                rb.AddForce(new Vector2(0f, doubleJumpForce), ForceMode2D.Impulse);
-                enableDoubleJump = false;
-                timerDoubleJump = doubleJumpCooldown;
-                // Animation
-            }
+          
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+            rb.AddForce(new Vector2(0f, doubleJumpForce), ForceMode2D.Impulse);
+
+            enableDoubleJump = false;             
+            
         }
     }
 }
