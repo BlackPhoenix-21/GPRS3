@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Input System")]
-    public InputActionReference move;   
-    public InputActionReference jump;   
-    public InputActionReference dash;   
+    public InputActionReference move;
+    public InputActionReference jump;
+    public InputActionReference dash;
 
     [Header("Bewegungswerte")]
     public float runSpeed = 15f;
@@ -22,8 +22,8 @@ public class PlayerMovement : MonoBehaviour
     public float dashCooldown = 2.5f;
 
     [Header("Double Jump")]
-    public bool enableDoubleJump = true;    
-    public float doubleJumpCooldown = 0.5f;  
+    public bool enableDoubleJump = true;
+    public float doubleJumpCooldown = 0.5f;
 
     [Header("Ground Check")]
     public LayerMask groundMask;
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        
+
         Vector2 moveInput = move.action.ReadValue<Vector2>();
         float inputX = moveInput.x;   // -1 .. 1
         float deadZone = 0.1f;
@@ -75,16 +75,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveable == 0)
         {
-            if (inputX > deadZone)      horizontalInput = 1;
-            else if (inputX < -deadZone) horizontalInput = -1;
+            if (inputX > deadZone)
+                horizontalInput = 1;
+            else if (inputX < -deadZone)
+                horizontalInput = -1;
         }
-        else if (moveable == 1)         
+        else if (moveable == 1)
         {
-            if (inputX < -deadZone)     horizontalInput = -1;
+            if (inputX < -deadZone)
+                horizontalInput = -1;
         }
-        else if (moveable == -1)      
+        else if (moveable == -1)
         {
-            if (inputX > deadZone)      horizontalInput = 1;
+            if (inputX > deadZone)
+                horizontalInput = 1;
         }
 
         if (horizontalInput != 0)
@@ -103,11 +107,11 @@ public class PlayerMovement : MonoBehaviour
                 isDashing = false;
         }
 
-       
+
         if (!grounded && !enableDoubleJump && timerDoubleJump > 0f)
             timerDoubleJump -= Time.deltaTime;
 
-       
+
         if (grounded && timerDoubleJump <= 0f)
             enableDoubleJump = true;
 
@@ -162,9 +166,9 @@ public class PlayerMovement : MonoBehaviour
             float horizontalDiff = contactPoint.x - playerPos.x;
 
             if (horizontalDiff < -0.1f)
-                moveable = -1; 
+                moveable = -1;
             else if (horizontalDiff > 0.1f)
-                moveable = 1;  
+                moveable = 1;
             else
                 moveable = 0;
         }
@@ -189,16 +193,16 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-     
+
         Vector2 origin = col.bounds.center;
-    
+
         float rayLength = col.bounds.extents.y + groundCheckDistance;
 
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, rayLength, groundMask);
 
         grounded = hit.collider != null;
 
-       
+
         Debug.DrawRay(origin, Vector2.down * rayLength, grounded ? Color.green : Color.red);
     }
 
@@ -213,12 +217,12 @@ public class PlayerMovement : MonoBehaviour
         // TODO: animation
     }
 
-   
+
     private void Jump()
     {
         if (grounded)
         {
-          
+
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
 
@@ -227,12 +231,11 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (enableDoubleJump)
         {
-          
+
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(new Vector2(0f, doubleJumpForce), ForceMode2D.Impulse);
 
-            enableDoubleJump = false;             
-            
+            enableDoubleJump = false;
         }
     }
 }

@@ -16,7 +16,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "jump",
+                    "name": "Jump",
                     "type": "Button",
                     "id": "da350e13-d119-464c-a747-4132d3876ab8",
                     "expectedControlType": "",
@@ -25,18 +25,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "dash",
+                    "name": "Dash",
                     "type": "Button",
                     "id": "0ff2b4e1-3f97-433d-8ae7-7ed657f2ad7b",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Crouch",
-                    "type": "Button",
-                    "id": "c36fe8fe-2359-4a43-b083-ac55c8040d64",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -106,7 +97,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "jump",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -117,18 +108,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d846ceb6-8bf9-482b-9390-cb09be94010e",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Crouch",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

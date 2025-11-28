@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7619814089178701092}
   - component: {fileID: 5271505301421636301}
   - component: {fileID: 516738525567144451}
+  - component: {fileID: 8734248208286099469}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -180,10 +181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7353bd40e2c6c7244a572ce8aa195528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftKey: 97
-  rightKey: 100
-  jumpKey: 32
-  dashKey: 306
+  move: {fileID: -7736675200394916517, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
+  jump: {fileID: -106678677691151490, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
+  dash: {fileID: -11705204061271480, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
   runSpeed: 15
   jumpForce: 7.5
   doubleJumpForce: 7.5
@@ -201,3 +201,20 @@ MonoBehaviour:
   grounded: 0
   timerDash: 0
   timerDoubleJump: 0
+  dir: 1
+--- !u!114 &8734248208286099469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4404503069114753968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8648db08e3cac5d4d8927bab41fd6c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformSpawing: 101
+  platformPrefab: {fileID: 0}
+  spacing: {x: 3, y: 1}
+  prePlace: {fileID: 0}
