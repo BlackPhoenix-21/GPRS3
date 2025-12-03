@@ -4,19 +4,22 @@ using UnityEngine;
 public class PlayerAbilities : MonoBehaviour
 {
     public KeyCode platformSpawing = KeyCode.E;
+    public float countdown = 1f;
     public GameObject platformPrefab;
     public Vector2 spacing = new Vector2(3, 1);
+    [Range(0.1f, 1f)] public float alpha = 0.5f;
     public GameObject prePlace;
     private GameObject platform;
+    private float timer;
 
     void Update()
     {
-
         if (platform == null)
         {
-            if (Input.GetKeyUp(platformSpawing))
+            if (Input.GetKeyUp(platformSpawing) && timer < 0)
             {
                 SpawnPlatform();
+                timer = countdown;
             }
             else if (Input.GetKey(platformSpawing))
             {
@@ -31,6 +34,7 @@ public class PlayerAbilities : MonoBehaviour
                 platform = null;
             }
         }
+        timer -= Time.deltaTime;
     }
 
     private void SpawnPrePlace()
@@ -43,8 +47,8 @@ public class PlayerAbilities : MonoBehaviour
         Vector3 transformVector = transform.position + new Vector3(spacing.x, 0) * facing + new Vector3(0, spacing.y);
         prePlace = Instantiate(platformPrefab, transformVector, Quaternion.identity);
         prePlace.GetComponent<Collider2D>().enabled = false;
-        SpriteRenderer r = prePlace.GetComponent<SpriteRenderer>();
-        r.color = new Color(r.color.r, r.color.g, r.color.b, 125);
+        SpriteRenderer rend = prePlace.GetComponent<SpriteRenderer>();
+        rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, alpha);
         Platform pfP;
         if (prePlace.TryGetComponent<Platform>(out pfP))
         {
