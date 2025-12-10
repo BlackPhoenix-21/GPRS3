@@ -337,7 +337,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &673062528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fec5f719d71ac48a0472b91d7ec72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!114 &673062529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2388,9 +2389,25 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8734248208286099469, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
+      propertyPath: pCountMax
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734248208286099469, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
+      propertyPath: movePlatform
+      value: 
+      objectReference: {fileID: -376726341513356977, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
+    - target: {fileID: 8734248208286099469, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
       propertyPath: platformPrefab
       value: 
       objectReference: {fileID: 6931548910715759799}
+    - target: {fileID: 8734248208286099469, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
+      propertyPath: platformCalling
+      value: 
+      objectReference: {fileID: -517982075934931827, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
+    - target: {fileID: 8734248208286099469, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
+      propertyPath: platformSpawing
+      value: 
+      objectReference: {fileID: 6542592136425370165, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
