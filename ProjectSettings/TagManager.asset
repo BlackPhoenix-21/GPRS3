@@ -8,6 +8,7 @@ TagManager:
   - GroundCheck
   - Wall
   - 'groundMask '
+  - Handle
   layers:
   - Default
   - TransparentFX

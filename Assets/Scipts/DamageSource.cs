@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class DamageSource : MonoBehaviour
 {
-    public new TagHandle tag;
+    private string targetTag = "Player";   
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(tag))
+        if (!collision.gameObject.CompareTag(targetTag))
+            return;
+
+        if (collision.gameObject.TryGetComponent<PlayerController>(out var playerController))
         {
-            if (TryGetComponent<PlayerController>(out var playerController))
-            {
-                playerController.TakeDamge();
-            }
+            playerController.TakeDamage();
         }
     }
+
 }

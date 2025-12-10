@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
         invincibleTimer -= Time.deltaTime;
     }
 
-    public void TakeDamge()
+    public void TakeDamage()
     {
         if (invincibleTimer > 0)
             return;
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
         if (health <= 0)
             Death();
         invincibleTimer = invincibleCooldown;
+         Debug.Log("Player bekommt Schaden. Health: " + health);
     }
 
     private void Death()
