@@ -66,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-
         Vector2 moveInput = move.action.ReadValue<Vector2>();
         float inputX = moveInput.x;   // -1 .. 1
         float deadZone = 0.1f;

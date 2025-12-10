@@ -3,6 +3,7 @@ using UnityEngine;
 public class DamageSource : MonoBehaviour
 {
     public new TagHandle tag;
+    public float damage;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -10,7 +11,7 @@ public class DamageSource : MonoBehaviour
         {
             if (TryGetComponent<PlayerController>(out var playerController))
             {
-                playerController.TakeDamge();
+                playerController.TakeDamage(damage);
             }
         }
     }

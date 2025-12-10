@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Stats")]
-    private int health = 2;
+    private float health = 100;
     public float invincibleCooldown = 2f;
     private float invincibleTimer;
 
@@ -15,12 +15,12 @@ public class PlayerController : MonoBehaviour
         invincibleTimer -= Time.deltaTime;
     }
 
-    public void TakeDamge()
+    public void TakeDamage(float damage)
     {
         if (invincibleTimer > 0)
             return;
 
-        health--;
+        health -= damage;
         if (health <= 0)
             Death();
         invincibleTimer = invincibleCooldown;

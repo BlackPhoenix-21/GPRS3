@@ -1,48 +1,106 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAbilities : MonoBehaviour
 {
-    public KeyCode platformSpawing = KeyCode.E;
+    public InputActionReference platformSpawing;
+    public InputActionReference platformCalling;
+    public InputActionReference movePlatform;
     public float countdown = 1f;
     public GameObject platformPrefab;
     public Vector2 spacing = new Vector2(3, 1);
     [Range(0.1f, 1f)] public float alpha = 0.5f;
     public GameObject prePlace;
-    private GameObject platform;
     private float timer;
+    private int pCount;
+    public int pCountMax = 3;
+    private List<GameObject> platforms = new List<GameObject>();
+
+    private void OnEnable()
+    {
+        platformCalling.action.Enable();
+        platformSpawing.action.Enable();
+        movePlatform.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        platformCalling.action.Disable();
+        platformSpawing.action.Disable();
+        movePlatform.action.Disable();
+    }
 
     void Update()
     {
-        if (platform == null)
+        if (platformSpawing.action.WasReleasedThisFrame() && timer < 0 && pCount < pCountMax)
         {
-            if (Input.GetKeyUp(platformSpawing) && timer < 0)
-            {
-                SpawnPlatform();
-                timer = countdown;
-            }
-            else if (Input.GetKey(platformSpawing))
-            {
+            SpawnPlatform();
+            timer = countdown;
+        }
+        else if (platformSpawing.action.IsPressed())
+        {
+            if (pCount >= pCountMax)
+                SpawnPrePlaceFalse();
+            else
                 SpawnPrePlace();
-            }
+            return;
         }
         else
         {
-            if (Input.GetKeyUp(platformSpawing))
+            if (prePlace != null)
             {
-                Destroy(platform);
-                platform = null;
+                Destroy(prePlace);
+                prePlace = null;
             }
         }
+
+        if (platformCalling.action.WasPressedThisFrame() && pCount > 0)
+        {
+            Destroy(platforms[0]);
+            platforms.RemoveAt(0);
+            pCount--;
+        }
+
         timer -= Time.deltaTime;
+    }
+
+    private void SpawnPrePlaceFalse()
+    {
+        if (prePlace != null)
+        {
+            MovePlatform();
+            return;
+        }
+
+        float facing = GetComponent<PlayerMovement>().dir;
+        Vector3 transformVector = transform.position + new Vector3(spacing.x, 0) * facing + new Vector3(0, spacing.y);
+        prePlace = Instantiate(platformPrefab, transformVector, Quaternion.identity);
+        prePlace.GetComponent<Collider2D>().enabled = false;
+        SpriteRenderer rend = prePlace.GetComponent<SpriteRenderer>();
+        rend.color = new Color(1, 0, 0, alpha);
+        Platform pfP;
+        if (prePlace.TryGetComponent<Platform>(out pfP))
+        {
+            pfP.enabled = false;
+        }
+    }
+
+    private void MovePlatform()
+    {
+        Vector2 move = movePlatform.action.ReadValue<Vector2>();
+        prePlace.transform.position += new Vector3(move.x, move.y);
     }
 
     private void SpawnPrePlace()
     {
         if (prePlace != null)
         {
-            Destroy(prePlace);
+            MovePlatform();
+            return;
         }
+
         float facing = GetComponent<PlayerMovement>().dir;
         Vector3 transformVector = transform.position + new Vector3(spacing.x, 0) * facing + new Vector3(0, spacing.y);
         prePlace = Instantiate(platformPrefab, transformVector, Quaternion.identity);
@@ -62,6 +120,7 @@ public class PlayerAbilities : MonoBehaviour
         float facing = GetComponent<PlayerMovement>().dir;
         Vector3 transformVector = transform.position + new Vector3(spacing.x, 0) * facing + new Vector3(0, spacing.y);
         GameObject pf = Instantiate(platformPrefab, transformVector, Quaternion.identity);
-        platform = pf;
+        platforms.Add(pf);
+        pCount++;
     }
 }
