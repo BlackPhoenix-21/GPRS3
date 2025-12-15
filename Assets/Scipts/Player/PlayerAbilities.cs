@@ -1,22 +1,32 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerMovement))]
 public class PlayerAbilities : MonoBehaviour
 {
+    [Header("Inputs")]
     public InputActionReference platformSpawing;
     public InputActionReference platformCalling;
     public InputActionReference movePlatform;
-    public float countdown = 1f;
+    [Header("Platform")]
+    public float cooldown = 1f;
     public GameObject platformPrefab;
-    public Vector2 spacing = new Vector2(3, 1);
+    [Tooltip("Max Platform Count")]
+    public int pCountMax = 3;
     [Range(0.1f, 1f)] public float alpha = 0.5f;
-    public GameObject prePlace;
+    [Header("Moving")]
+    public Vector2 spacing = new Vector2(3, 0);
+    public Vector2 deadzone = new Vector2(2, 1);
+    public float speed = 1f;
+
+    private GameObject prePlace;
     private float timer;
     private int pCount;
-    public int pCountMax = 3;
     private List<GameObject> platforms = new List<GameObject>();
+    private Vector3 accPos;
 
     private void OnEnable()
     {
@@ -37,7 +47,7 @@ public class PlayerAbilities : MonoBehaviour
         if (platformSpawing.action.WasReleasedThisFrame() && timer < 0 && pCount < pCountMax)
         {
             SpawnPlatform();
-            timer = countdown;
+            timer = cooldown;
         }
         else if (platformSpawing.action.IsPressed())
         {
@@ -66,31 +76,63 @@ public class PlayerAbilities : MonoBehaviour
         timer -= Time.deltaTime;
     }
 
-    private void SpawnPrePlaceFalse()
+    private void MovePlatform()
     {
-        if (prePlace != null)
+        Vector2 moveValue = movePlatform.action.ReadValue<Vector2>();
+        Vector3 move = new Vector3(moveValue.x, moveValue.y, 0) * speed * Time.deltaTime;
+
+        Vector3 newPos = prePlace.transform.position + move;
+        Vector3 localPos = newPos - transform.position;
+
+        bool wouldBeInsideDeadzone = Mathf.Abs(localPos.x) <= deadzone.x && Mathf.Abs(localPos.y) <= deadzone.y;
+
+        if (wouldBeInsideDeadzone)
         {
-            MovePlatform();
-            return;
+            float pushX = localPos.x;
+            float pushY = localPos.y;
+
+            if (Mathf.Abs(pushX) <= deadzone.x)
+            {
+                pushX = Mathf.Sign(pushX) * deadzone.x;
+            }
+
+            if (Mathf.Abs(pushY) <= deadzone.y)
+            {
+                pushY = Mathf.Sign(pushY) * deadzone.y;
+            }
+
+            prePlace.transform.position = transform.position + new Vector3(pushX, pushY, 0);
+        }
+        else
+        {
+            prePlace.transform.position = newPos;
         }
 
+        accPos = prePlace.transform.position;
+    }
+
+    private GameObject PlatformSpawner()
+    {
         float facing = GetComponent<PlayerMovement>().dir;
         Vector3 transformVector = transform.position + new Vector3(spacing.x, 0) * facing + new Vector3(0, spacing.y);
-        prePlace = Instantiate(platformPrefab, transformVector, Quaternion.identity);
+        return Instantiate(platformPrefab, transformVector, Quaternion.identity);
+    }
+
+    private void PrePlace(GameObject pl, bool color)
+    {
         prePlace.GetComponent<Collider2D>().enabled = false;
         SpriteRenderer rend = prePlace.GetComponent<SpriteRenderer>();
-        rend.color = new Color(1, 0, 0, alpha);
+
+        if (!color)
+            rend.color = new Color(1, 0, 0, alpha);
+        else
+            rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, alpha);
+
         Platform pfP;
         if (prePlace.TryGetComponent<Platform>(out pfP))
         {
             pfP.enabled = false;
         }
-    }
-
-    private void MovePlatform()
-    {
-        Vector2 move = movePlatform.action.ReadValue<Vector2>();
-        prePlace.transform.position += new Vector3(move.x, move.y);
     }
 
     private void SpawnPrePlace()
@@ -100,26 +142,29 @@ public class PlayerAbilities : MonoBehaviour
             MovePlatform();
             return;
         }
+        prePlace = PlatformSpawner();
+        accPos = prePlace.transform.position;
+        PrePlace(prePlace, true);
+    }
 
-        float facing = GetComponent<PlayerMovement>().dir;
-        Vector3 transformVector = transform.position + new Vector3(spacing.x, 0) * facing + new Vector3(0, spacing.y);
-        prePlace = Instantiate(platformPrefab, transformVector, Quaternion.identity);
-        prePlace.GetComponent<Collider2D>().enabled = false;
-        SpriteRenderer rend = prePlace.GetComponent<SpriteRenderer>();
-        rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, alpha);
-        Platform pfP;
-        if (prePlace.TryGetComponent<Platform>(out pfP))
+    private void SpawnPrePlaceFalse()
+    {
+        if (prePlace != null)
         {
-            pfP.enabled = false;
+            MovePlatform();
+            return;
         }
+
+        prePlace = PlatformSpawner();
+        accPos = prePlace.transform.position;
+        PrePlace(prePlace, false);
     }
 
     private void SpawnPlatform()
     {
         Destroy(prePlace);
-        float facing = GetComponent<PlayerMovement>().dir;
-        Vector3 transformVector = transform.position + new Vector3(spacing.x, 0) * facing + new Vector3(0, spacing.y);
-        GameObject pf = Instantiate(platformPrefab, transformVector, Quaternion.identity);
+        GameObject pf = PlatformSpawner();
+        pf.transform.position = accPos;
         platforms.Add(pf);
         pCount++;
     }

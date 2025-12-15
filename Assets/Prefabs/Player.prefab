@@ -214,7 +214,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8648db08e3cac5d4d8927bab41fd6c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformSpawing: 101
+  platformSpawing: {fileID: 6542592136425370165, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
+  platformCalling: {fileID: -517982075934931827, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
+  movePlatform: {fileID: -376726341513356977, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
+  cooldown: 1
   platformPrefab: {fileID: 0}
+  pCountMax: 3
+  alpha: 0.5
   spacing: {x: 3, y: 1}
-  prePlace: {fileID: 0}
+  deadzone: {x: 2, y: 1}
+  speed: 5
