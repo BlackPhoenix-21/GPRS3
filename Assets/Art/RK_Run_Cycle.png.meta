@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: 391436625069b4b4ab54a14d511645be
+guid: d31de91c2be150c4d9a673c6ca8bbb7e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1634046424219521923
-    second: Rotkappchen_run_0
+      213: -1030865217349620213
+    second: RK_Run_Cycle_0
   - first:
-      213: 331135693797075692
-    second: Rotkappchen_run_1
+      213: -7223050200215385862
+    second: RK_Run_Cycle_1
   - first:
-      213: -4342245164662703653
-    second: Rotkappchen_run_2
+      213: -4508516954585306719
+    second: RK_Run_Cycle_2
   - first:
-      213: 8301605641306297883
-    second: Rotkappchen_run_3
+      213: -573231065935757702
+    second: RK_Run_Cycle_3
   - first:
-      213: -4145454189159085000
-    second: Rotkappchen_run_4
+      213: -340353764390421760
+    second: RK_Run_Cycle_4
   - first:
-      213: 5807296616123891572
-    second: Rotkappchen_run_5
+      213: 339923194043064227
+    second: RK_Run_Cycle_5
   - first:
-      213: -2227942761385120997
-    second: Rotkappchen_run_6
+      213: -3548811353293673580
+    second: RK_Run_Cycle_6
   - first:
-      213: 7308449539175330499
-    second: Rotkappchen_run_7
+      213: 3074865222982685599
+    second: RK_Run_Cycle_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -121,78 +121,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Rotkappchen_run_0
+      name: RK_Run_Cycle_0
       rect:
         serializedVersion: 2
-        x: 93
-        y: 537
-        width: 260
-        height: 434
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3831a16b09c4da610800000000000000
-      internalID: 1634046424219521923
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rotkappchen_run_1
-      rect:
-        serializedVersion: 2
-        x: 609
-        y: 549
-        width: 229
-        height: 439
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cea2a39b82e689400800000000000000
-      internalID: 331135693797075692
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rotkappchen_run_2
-      rect:
-        serializedVersion: 2
-        x: 1127
-        y: 545
-        width: 236
-        height: 450
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bd93f98670f3db3c0800000000000000
-      internalID: -4342245164662703653
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Rotkappchen_run_3
-      rect:
-        serializedVersion: 2
-        x: 1613
-        y: 541
-        width: 260
+        x: 17
+        y: 526
+        width: 344
         height: 444
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -202,20 +136,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b16d073d85a353370800000000000000
-      internalID: 8301605641306297883
+      spriteID: b0ee19ceb81a1b1f0800000000000000
+      internalID: -1030865217349620213
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rotkappchen_run_4
+      name: RK_Run_Cycle_1
       rect:
         serializedVersion: 2
-        x: 88
-        y: 36
-        width: 266
-        height: 435
+        x: 537
+        y: 538
+        width: 321
+        height: 449
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 83c8486e0636876c0800000000000000
-      internalID: -4145454189159085000
+      spriteID: af8095dbc1292cb90800000000000000
+      internalID: -7223050200215385862
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rotkappchen_run_5
+      name: RK_Run_Cycle_2
       rect:
         serializedVersion: 2
-        x: 578
-        y: 45
-        width: 241
-        height: 443
+        x: 1058
+        y: 533
+        width: 337
+        height: 461
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -246,20 +180,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 47f74650189a79050800000000000000
-      internalID: 5807296616123891572
+      spriteID: 1a9ed1a87b78e61c0800000000000000
+      internalID: -4508516954585306719
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rotkappchen_run_6
+      name: RK_Run_Cycle_3
       rect:
         serializedVersion: 2
-        x: 1131
-        y: 42
-        width: 227
-        height: 456
+        x: 1575
+        y: 531
+        width: 342
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,20 +202,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b1bacb7dcd1c411e0800000000000000
-      internalID: -2227942761385120997
+      spriteID: a7e3ea4f1697b08f0800000000000000
+      internalID: -573231065935757702
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Rotkappchen_run_7
+      name: RK_Run_Cycle_4
       rect:
         serializedVersion: 2
-        x: 1627
-        y: 40
-        width: 262
-        height: 452
+        x: 33
+        y: 13
+        width: 330
+        height: 445
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -290,8 +224,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c2b9615224dc6560800000000000000
-      internalID: 7308449539175330499
+      spriteID: 00bba87fd02d64bf0800000000000000
+      internalID: -340353764390421760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RK_Run_Cycle_5
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 22
+        width: 295
+        height: 453
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3af5adf0856a7b400800000000000000
+      internalID: 339923194043064227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RK_Run_Cycle_6
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 18
+        width: 320
+        height: 467
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49bae0860e610cec0800000000000000
+      internalID: -3548811353293673580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RK_Run_Cycle_7
+      rect:
+        serializedVersion: 2
+        x: 1573
+        y: 16
+        width: 361
+        height: 463
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f93d51401ad1caa20800000000000000
+      internalID: 3074865222982685599
       vertices: []
       indices: 
       edges: []
@@ -310,14 +310,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Rotkappchen_run_0: 1634046424219521923
-      Rotkappchen_run_1: 331135693797075692
-      Rotkappchen_run_2: -4342245164662703653
-      Rotkappchen_run_3: 8301605641306297883
-      Rotkappchen_run_4: -4145454189159085000
-      Rotkappchen_run_5: 5807296616123891572
-      Rotkappchen_run_6: -2227942761385120997
-      Rotkappchen_run_7: 7308449539175330499
+      RK_Run_Cycle_0: -1030865217349620213
+      RK_Run_Cycle_1: -7223050200215385862
+      RK_Run_Cycle_2: -4508516954585306719
+      RK_Run_Cycle_3: -573231065935757702
+      RK_Run_Cycle_4: -340353764390421760
+      RK_Run_Cycle_5: 339923194043064227
+      RK_Run_Cycle_6: -3548811353293673580
+      RK_Run_Cycle_7: 3074865222982685599
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
