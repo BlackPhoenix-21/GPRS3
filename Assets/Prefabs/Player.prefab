@@ -222,5 +222,5 @@ MonoBehaviour:
   pCountMax: 3
   alpha: 0.5
   spacing: {x: 3, y: 1}
-  deadzone: {x: 2, y: 1}
+  deadzone: {x: 2.25, y: 1.5}
   speed: 5

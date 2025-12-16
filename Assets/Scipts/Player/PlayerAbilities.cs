@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,14 +20,17 @@ public class PlayerAbilities : MonoBehaviour
     [Range(0.1f, 1f)] public float alpha = 0.5f;
     [Header("Moving")]
     public Vector2 spacing = new Vector2(3, 0);
-    public Vector2 deadzone = new Vector2(2, 1);
+    public Vector2 deadzone = new Vector2(2.25f, 1.5f);
     public float speed = 1f;
 
     private GameObject prePlace;
     private float timer;
     private int pCount;
     private List<GameObject> platforms = new List<GameObject>();
+
     private Vector3 accPos;
+    private Vector3 deadzonePos;
+    private Vector3 deadzoneNeg;
 
     private void OnEnable()
     {
@@ -42,7 +46,18 @@ public class PlayerAbilities : MonoBehaviour
         movePlatform.action.Disable();
     }
 
-    void Update()
+    private void Start()
+    {
+        NewDeadzone();
+    }
+
+    private void NewDeadzone()
+    {
+        deadzonePos = transform.position + (Vector3)deadzone;
+        deadzoneNeg = transform.position - (Vector3)deadzone;
+    }
+
+    private void Update()
     {
         if (platformSpawing.action.WasReleasedThisFrame() && timer < 0 && pCount < pCountMax)
         {
@@ -51,7 +66,7 @@ public class PlayerAbilities : MonoBehaviour
         }
         else if (platformSpawing.action.IsPressed())
         {
-            if (pCount >= pCountMax)
+            if (pCount >= pCountMax || timer > 0)
                 SpawnPrePlaceFalse();
             else
                 SpawnPrePlace();
@@ -79,36 +94,58 @@ public class PlayerAbilities : MonoBehaviour
     private void MovePlatform()
     {
         Vector2 moveValue = movePlatform.action.ReadValue<Vector2>();
+
         Vector3 move = new Vector3(moveValue.x, moveValue.y, 0) * speed * Time.deltaTime;
-
+        NewDeadzone();
         Vector3 newPos = prePlace.transform.position + move;
-        Vector3 localPos = newPos - transform.position;
 
-        bool wouldBeInsideDeadzone = Mathf.Abs(localPos.x) <= deadzone.x && Mathf.Abs(localPos.y) <= deadzone.y;
-
-        if (wouldBeInsideDeadzone)
-        {
-            float pushX = localPos.x;
-            float pushY = localPos.y;
-
-            if (Mathf.Abs(pushX) <= deadzone.x)
-            {
-                pushX = Mathf.Sign(pushX) * deadzone.x;
-            }
-
-            if (Mathf.Abs(pushY) <= deadzone.y)
-            {
-                pushY = Mathf.Sign(pushY) * deadzone.y;
-            }
-
-            prePlace.transform.position = transform.position + new Vector3(pushX, pushY, 0);
-        }
+        if (InDeadZone(newPos))
+            prePlace.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, alpha);
         else
-        {
-            prePlace.transform.position = newPos;
-        }
+            prePlace.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
 
+        if (moveValue == Vector2.zero)
+            return;
+
+        prePlace.transform.position = DeadZone(newPos);
         accPos = prePlace.transform.position;
+    }
+
+    private Vector3 DeadZone(Vector3 pos)
+    {
+        Vector3 newPos = pos;
+        if (InDeadZone(newPos))
+        {
+            // Position ist innerhalb der Deadzone - zur nächsten Kante schieben
+            float distToRight = deadzonePos.x - newPos.x;
+            float distToLeft = newPos.x - deadzoneNeg.x;
+            float distToTop = deadzonePos.y - newPos.y;
+            float distToBottom = newPos.y - deadzoneNeg.y;
+
+            float minDist = Mathf.Min(distToRight, distToLeft, distToTop, distToBottom);
+
+            if (minDist == distToRight)
+                newPos.x = deadzonePos.x;
+            else if (minDist == distToLeft)
+                newPos.x = deadzoneNeg.x;
+            else if (minDist == distToTop)
+                newPos.y = deadzonePos.y;
+            else
+                newPos.y = deadzoneNeg.y;
+        }
+        return newPos;
+    }
+
+    private bool InDeadZone(Vector3 newPos)
+    {
+        if (newPos.x < deadzonePos.x && newPos.x > deadzoneNeg.x)
+        {
+            if (newPos.y < deadzonePos.y && newPos.y > deadzoneNeg.y)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private GameObject PlatformSpawner()
@@ -118,15 +155,14 @@ public class PlayerAbilities : MonoBehaviour
         return Instantiate(platformPrefab, transformVector, Quaternion.identity);
     }
 
-    private void PrePlace(GameObject pl, bool color)
+    private void PrePlace(bool color)
     {
         prePlace.GetComponent<Collider2D>().enabled = false;
-        SpriteRenderer rend = prePlace.GetComponent<SpriteRenderer>();
 
         if (!color)
-            rend.color = new Color(1, 0, 0, alpha);
+            prePlace.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, alpha);
         else
-            rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, alpha);
+            prePlace.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
 
         Platform pfP;
         if (prePlace.TryGetComponent<Platform>(out pfP))
@@ -144,7 +180,7 @@ public class PlayerAbilities : MonoBehaviour
         }
         prePlace = PlatformSpawner();
         accPos = prePlace.transform.position;
-        PrePlace(prePlace, true);
+        PrePlace(true);
     }
 
     private void SpawnPrePlaceFalse()
@@ -157,13 +193,21 @@ public class PlayerAbilities : MonoBehaviour
 
         prePlace = PlatformSpawner();
         accPos = prePlace.transform.position;
-        PrePlace(prePlace, false);
+        PrePlace(false);
     }
 
     private void SpawnPlatform()
     {
         Destroy(prePlace);
         GameObject pf = PlatformSpawner();
+
+        if (InDeadZone(accPos))
+        {
+            prePlace.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, alpha);
+            Destroy(pf);
+            return;
+        }
+
         pf.transform.position = accPos;
         platforms.Add(pf);
         pCount++;
