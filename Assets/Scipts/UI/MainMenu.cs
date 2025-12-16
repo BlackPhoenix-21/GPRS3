@@ -7,9 +7,15 @@ public class MainMenu : MonoBehaviour
     [Header("Scene")]
     [SerializeField] private string gameSceneName = "Level1";
 
-    public void OnClickPlay()
+    public void OnClickNewGame()
     {
         SceneManager.LoadScene(gameSceneName);
+    }
+
+    public void OnClickContinue()
+    {
+        // IDK
+        print("Game");
     }
 
     public void OnClickOptions()
