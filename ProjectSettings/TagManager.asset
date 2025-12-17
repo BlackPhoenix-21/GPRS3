@@ -9,7 +9,11 @@ TagManager:
   - Wall
   - 'groundMask '
   - Handle
+<<<<<<< Updated upstream
   - Grossmutter
+=======
+  - Hazard
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
@@ -17,7 +21,7 @@ TagManager:
   - groundMask
   - Water
   - UI
-  - 
+  - Hazard
   - 
   - 
   - 
