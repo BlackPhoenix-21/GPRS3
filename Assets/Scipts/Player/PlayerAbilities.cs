@@ -12,12 +12,14 @@ public class PlayerAbilities : MonoBehaviour
     public InputActionReference platformSpawing;
     public InputActionReference platformCalling;
     public InputActionReference movePlatform;
+
     [Header("Platform")]
     public float cooldown = 1f;
     public GameObject platformPrefab;
     [Tooltip("Max Platform Count")]
     public int pCountMax = 3;
     [Range(0.1f, 1f)] public float alpha = 0.5f;
+
     [Header("Moving")]
     public Vector2 spacing = new Vector2(3, 0);
     public Vector2 deadzone = new Vector2(2.25f, 1.5f);

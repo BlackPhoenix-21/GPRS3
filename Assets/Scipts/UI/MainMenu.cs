@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [Header("Scene")]
-    [SerializeField] private string gameSceneName = "Level1";
+    public string gameSceneName = "Level1";
 
     public void OnClickNewGame()
     {

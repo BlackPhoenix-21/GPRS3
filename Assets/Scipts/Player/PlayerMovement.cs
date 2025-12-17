@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Vector2 moveInput = move.action.ReadValue<Vector2>();
-        float inputX = moveInput.x;   // -1 .. 1
+        float inputX = moveInput.x;
         float deadZone = 0.1f;
 
         horizontalInput = 0;
@@ -105,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
             if (dashTimeLeft <= 0f)
                 isDashing = false;
         }
-
 
         if (!grounded && !enableDoubleJump && timerDoubleJump > 0f)
             timerDoubleJump -= Time.deltaTime;
@@ -192,7 +191,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-
         Vector2 origin = col.bounds.center;
 
         float rayLength = col.bounds.extents.y + groundCheckDistance;
@@ -200,7 +198,6 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, rayLength, groundMask);
 
         grounded = hit.collider != null;
-
 
         Debug.DrawRay(origin, Vector2.down * rayLength, grounded ? Color.green : Color.red);
     }
@@ -221,7 +218,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (grounded)
         {
-
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
 
@@ -230,7 +226,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (enableDoubleJump)
         {
-
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(new Vector2(0f, doubleJumpForce), ForceMode2D.Impulse);
 

@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - 'groundMask '
   - Handle
+  - Grossmutter
   layers:
   - Default
   - TransparentFX

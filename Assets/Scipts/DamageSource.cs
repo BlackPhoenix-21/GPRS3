@@ -12,8 +12,7 @@ public class DamageSource : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent<PlayerController>(out var playerController))
         {
-                playerController.TakeDamage(damage);
+            playerController.TakeDamage(damage);
         }
     }
-
 }
