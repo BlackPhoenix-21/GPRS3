@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyNPC : MonoBehaviour
+public class EnemyNPC2 : MonoBehaviour
 {
     public float speed = 2f;
 
