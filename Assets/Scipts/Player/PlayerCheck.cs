@@ -6,19 +6,19 @@ public class PlayerCheck :MonoBehaviour
    
 
     [Header("Movement")]
-    [SerializeField] float moveSpeed = 8f;      // скорость бега
-    [SerializeField] bool flipByScale = true;   // разворот спрайта по Scale.x
+    [SerializeField] float moveSpeed = 8f;     
+    [SerializeField] bool flipByScale = true;   
 
     [Header("Jump")]
-    [SerializeField] float jumpForce = 12f;     // сила прыжка (импульс)
-    [SerializeField] float coyoteTime = 0.1f;   // «коёт тайм» после схода с пола
-    [SerializeField] float jumpBuffer = 0.1f;   // буфер нажатия прыжка ДО касания пола
-    [SerializeField] int extraAirJumps = 0;     // 0 = без дабл-джампа
+    [SerializeField] float jumpForce = 12f;    
+    [SerializeField] float coyoteTime = 0.1f;   
+    [SerializeField] float jumpBuffer = 0.1f;   
+    [SerializeField] int extraAirJumps = 0;     
 
     [Header("Ground Check")]
-    [SerializeField] Transform groundCheck;     // пустой объект под ногами
+    [SerializeField] Transform groundCheck;     
     [SerializeField] float groundRadius = 0.15f;
-    [SerializeField] LayerMask groundMask;      // слой пола/платформ
+    [SerializeField] LayerMask groundMask;     
 
     Rigidbody2D rb;
     int airJumpsLeft;
