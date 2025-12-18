@@ -122,6 +122,8 @@ public class PlayerMovement : MonoBehaviour
             enableDoubleJump = true;
 
         timerDash -= Time.deltaTime;
+
+        GetComponent<SpriteRenderer>().flipX = dir < 0;
     }
 
     private void FixedUpdate()
@@ -222,7 +224,7 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         dashTimeLeft = dashDuration;
         timerDash = dashCooldown;
-        // TODO: animation
+        anim.SetTrigger("Dash");
     }
 
 

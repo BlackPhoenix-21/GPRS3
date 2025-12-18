@@ -44,10 +44,12 @@ public class Grossmutter : MonoBehaviour
     private GameObject player;
     private float rundir;
     private int hitsTaken;
+    private Animator anim;
 
     void Start()
     {
         rig2D = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
 
         state = GrossmutterState.Idle;
@@ -59,6 +61,7 @@ public class Grossmutter : MonoBehaviour
     void Update()
     {
         dirPlayer = Mathf.Sign(player.transform.position.x - transform.position.x);
+        GetComponent<SpriteRenderer>().flipX = dirPlayer < 0;
         switch (state)
         {
             case GrossmutterState.Stunned:
@@ -67,6 +70,7 @@ public class Grossmutter : MonoBehaviour
                 {
                     state = GrossmutterState.Idle;
                     idleTimer = idleTime;
+                    anim.SetBool("Stunned", false);
                 }
                 break;
 
@@ -82,6 +86,7 @@ public class Grossmutter : MonoBehaviour
                 break;
 
             case GrossmutterState.Walk:
+                anim.SetBool("IsMoving", true);
                 Walk();
 
                 if (Vector3.Distance(walkStartPosition, transform.position) >= walkDistance)
@@ -101,6 +106,7 @@ public class Grossmutter : MonoBehaviour
                 if (!isCharging)
                 {
                     rundir = dirPlayer;
+                    anim.SetBool("Dash", true);
                     chargingCoroutine = StartCoroutine(Charging());
                 }
                 break;
@@ -109,9 +115,11 @@ public class Grossmutter : MonoBehaviour
 
     public void Stunned()
     {
+        anim.SetTrigger("Stun");
         if (isCharging && chargingCoroutine != null)
         {
             StopCoroutine(chargingCoroutine);
+            anim.SetBool("Dash", false);
             chargingCoroutine = null;
             isCharging = false;
         }
@@ -151,6 +159,7 @@ public class Grossmutter : MonoBehaviour
         idleTimer = idleTime;
         isCharging = false;
         chargingCoroutine = null;
+        anim.SetBool("Dash", false);
     }
 
     private void Walk()
