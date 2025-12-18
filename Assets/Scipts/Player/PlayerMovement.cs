@@ -50,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        print(anim);
     }
 
     private void OnEnable()
@@ -124,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
         timerDash -= Time.deltaTime;
 
         GetComponent<SpriteRenderer>().flipX = dir < 0;
+        anim.SetFloat("VelY", rb.linearVelocityY);
     }
 
     private void FixedUpdate()

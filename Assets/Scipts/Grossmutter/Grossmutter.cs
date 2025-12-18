@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEditor.Build;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Grossmutter : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class Grossmutter : MonoBehaviour
     public float idleTime = 2.5f;
     public float stunTime = 2f;
 
+    public Image img;
+
     private float stunTimer;
     private float chargTimer;
     private float dirPlayer;
@@ -45,6 +48,7 @@ public class Grossmutter : MonoBehaviour
     private float rundir;
     private int hitsTaken;
     private Animator anim;
+    public bool hit;
 
     void Start()
     {
@@ -56,12 +60,21 @@ public class Grossmutter : MonoBehaviour
         chargTimer = chargCooldown;
         idleTimer = idleTime;
         hitsTaken = 0;
+
+        img.fillAmount = (4 - hitsTaken) / 4f;
     }
 
     void Update()
     {
+        if (hit)
+        {
+            print("hit");
+            hit = false;
+            hitsTaken++;
+        }
         dirPlayer = Mathf.Sign(player.transform.position.x - transform.position.x);
-        GetComponent<SpriteRenderer>().flipX = dirPlayer < 0;
+        GetComponent<SpriteRenderer>().flipX = dirPlayer > 0;
+        img.fillAmount = (4 - hitsTaken) / 4f;
         switch (state)
         {
             case GrossmutterState.Stunned:
@@ -91,6 +104,7 @@ public class Grossmutter : MonoBehaviour
 
                 if (Vector3.Distance(walkStartPosition, transform.position) >= walkDistance)
                 {
+                    anim.SetBool("IsMoving", false);
                     state = GrossmutterState.Idle;
                     idleTimer = idleTime;
                 }
@@ -98,6 +112,7 @@ public class Grossmutter : MonoBehaviour
                 chargTimer -= Time.deltaTime;
                 if (chargTimer <= 0)
                 {
+                    anim.SetBool("IsMoving", false);
                     state = GrossmutterState.Charge;
                 }
                 break;
@@ -106,7 +121,6 @@ public class Grossmutter : MonoBehaviour
                 if (!isCharging)
                 {
                     rundir = dirPlayer;
-                    anim.SetBool("Dash", true);
                     chargingCoroutine = StartCoroutine(Charging());
                 }
                 break;
@@ -133,6 +147,7 @@ public class Grossmutter : MonoBehaviour
         if (hitsTaken >= 4)
         {
             // End-Anim
+            print("death");
         }
 
         state = GrossmutterState.Stunned;
@@ -145,6 +160,8 @@ public class Grossmutter : MonoBehaviour
         yield return new WaitForSeconds(chargingTime);
 
         float chargeTimer = 0f;
+
+        anim.SetBool("Dash", true);
         while (chargeTimer < chargeDuration)
         {
             rig2D.linearVelocity = new Vector2(chargeSpeed * rundir, rig2D.linearVelocity.y);

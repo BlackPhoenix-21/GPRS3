@@ -17,11 +17,11 @@ public class PlayerController : MonoBehaviour
     private Image healthBar;
     private TMP_Text healthText;
 
-    void Start()
+    void Awake()
     {
-        health = GameManager.Instance.health;
+        //health = GameManager.Instance.health;
         healthBar = GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "HB");
-        healthText = GetComponent<TMP_Text>();
+        healthText = GetComponentInChildren<TMP_Text>();
     }
 
     void Update()

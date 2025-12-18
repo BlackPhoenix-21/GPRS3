@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 01ca8c05991f20d42ab923d2503af607
+guid: 39f46f8d0138e634c9d63c9a88487c72
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9186922853409317678
-    second: Inbetween_New_0
+      213: 3018901052348372444
+    second: RK_dash_0
+  - first:
+      213: -749944512815421778
+    second: RK_dash_1
+  - first:
+      213: -4119249593429994522
+    second: RK_dash_2
+  - first:
+      213: -8313796947577070580
+    second: RK_dash_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 55
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Inbetween_New_0
+      name: RK_dash_0
       rect:
         serializedVersion: 2
-        x: 211
-        y: 65
-        width: 153
-        height: 393
+        x: 29
+        y: 21
+        width: 352
+        height: 436
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2dc9e97d65e718080800000000000000
-      internalID: -9186922853409317678
+      spriteID: cd51745238a45e920800000000000000
+      internalID: 3018901052348372444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RK_dash_1
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 24
+        width: 395
+        height: 439
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea622606079a795f0800000000000000
+      internalID: -749944512815421778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RK_dash_2
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 33
+        width: 440
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e3de6ac15c75d6c0800000000000000
+      internalID: -4119249593429994522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RK_dash_3
+      rect:
+        serializedVersion: 2
+        x: 1543
+        y: 27
+        width: 421
+        height: 419
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c11fc79b57f9c80800000000000000
+      internalID: -8313796947577070580
       vertices: []
       indices: 
       edges: []
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Inbetween_New_0: -9186922853409317678
+      RK_dash_0: 3018901052348372444
+      RK_dash_1: -749944512815421778
+      RK_dash_2: -4119249593429994522
+      RK_dash_3: -8313796947577070580
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

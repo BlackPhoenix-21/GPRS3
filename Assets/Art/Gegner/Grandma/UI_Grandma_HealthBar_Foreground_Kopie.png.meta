@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 3d521b505def4b542bd130391bf19229
+guid: 438def38c600ad94287240ca2ddf4b8e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8283807414935136905
-    second: wolfkap_0
-  - first:
-      213: 7245474829226798977
-    second: wolfkap_1
+      213: 8705894664624808741
+    second: UI_Grandma_HealthBar_Foreground_Kopie_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,45 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wolfkap_0
+      name: UI_Grandma_HealthBar_Foreground_Kopie_0
       rect:
         serializedVersion: 2
-        x: 141
-        y: 105
-        width: 1021
-        height: 897
+        x: 647
+        y: 31
+        width: 750
+        height: 122
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7755b0dab010a0d80800000000000000
-      internalID: -8283807414935136905
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wolfkap_1
-      rect:
-        serializedVersion: 2
-        x: 1261
-        y: 105
-        width: 401
-        height: 799
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 18fe81118f81d8460800000000000000
-      internalID: 7245474829226798977
+      spriteID: 5232ee8521d81d870800000000000000
+      internalID: 8705894664624808741
       vertices: []
       indices: 
       edges: []
@@ -150,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: eba6205d2c10af7449a1e3060817c949
     internalID: 0
     vertices: []
     indices: 
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      wolfkap_0: -8283807414935136905
-      wolfkap_1: 7245474829226798977
+      UI_Grandma_HealthBar_Foreground_Kopie_0: 8705894664624808741
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

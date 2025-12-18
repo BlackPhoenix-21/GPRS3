@@ -66,9 +66,12 @@ public class EnemyChaserHybrid2D : MonoBehaviour
     private JumpPoint2D currentJumpPoint;
     private bool jumpingByPoint;
 
+    private Animator anim;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -99,7 +102,7 @@ public class EnemyChaserHybrid2D : MonoBehaviour
         }
 
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
-       if (grounded && jumpingByPoint)
+        if (grounded && jumpingByPoint)
         {
             jumpingByPoint = false;
         }
@@ -151,6 +154,7 @@ public class EnemyChaserHybrid2D : MonoBehaviour
             rb.velocity = v;
 
             jumpingByPoint = true;
+            anim.SetTrigger("Jump");
 
             jumpTimer = jumpCooldown;
             currentJumpPoint = null;
@@ -167,11 +171,14 @@ public class EnemyChaserHybrid2D : MonoBehaviour
         if (allowAutoJump && (wallAhead || hazardAhead) && jumpTimer <= 0f)
         {
             rb.velocity = new Vector2(dir * autoJumpForwardVelocity, autoJumpUpVelocity);
+            anim.SetTrigger("Jump");
             jumpTimer = jumpCooldown;
             return;
         }
 
         rb.velocity = new Vector2(moveSpeed * dir, rb.velocity.y);
+
+        anim.SetBool("Grounded", grounded);
     }
 
     private bool IsOffscreen()
