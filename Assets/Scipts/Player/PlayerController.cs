@@ -9,8 +9,9 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [Header("Stats")]
-    private float health = 100;
     public float invincibleCooldown = 2f;
+
+    [HideInInspector] public float health = 100;
     private float invincibleTimer;
 
     private Image healthBar;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        health = GameManager.Instance.health;
         healthBar = GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "HB");
         healthText = GetComponent<TMP_Text>();
     }
