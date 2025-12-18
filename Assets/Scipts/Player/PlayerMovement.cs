@@ -44,10 +44,13 @@ public class PlayerMovement : MonoBehaviour
     private int horizontalInput = 0;
     private bool jumpPressed = false;
     private bool dashPressed = false;
+    private Animator anim;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        print(anim);
     }
 
     private void OnEnable()
@@ -69,6 +72,11 @@ public class PlayerMovement : MonoBehaviour
         Vector2 moveInput = move.action.ReadValue<Vector2>();
         float inputX = moveInput.x;
         float deadZone = 0.1f;
+
+        if (moveInput != Vector2.zero)
+            anim.SetBool("IsMoving", true);
+        else
+            anim.SetBool("IsMoving", false);
 
         horizontalInput = 0;
 
@@ -122,6 +130,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (jumpPressed)
         {
+            anim.SetTrigger("Jump");
+            anim.SetBool("Grounded", false);
             Jump();
             jumpPressed = false;
         }
@@ -198,6 +208,8 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, rayLength, groundMask);
 
         grounded = hit.collider != null;
+        if (grounded)
+            anim.SetBool("Grounded", true);
 
         Debug.DrawRay(origin, Vector2.down * rayLength, grounded ? Color.green : Color.red);
     }
