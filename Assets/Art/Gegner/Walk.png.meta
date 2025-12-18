@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 7b6a8a60151755c428cbea5c3a3b70c8
+guid: 9c8af0b9c65b5da40ba534ce5dac3e4d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5706451927764217726
-    second: Hedgehog_Ingrid_Animation_0
+      213: 4035959289877228764
+    second: Walk_0
   - first:
-      213: 413350435243456734
-    second: Hedgehog_Ingrid_Animation_1
+      213: -982904232830982447
+    second: Walk_1
   - first:
-      213: -5348367741839664741
-    second: Hedgehog_Ingrid_Animation_2
+      213: -350908408369970039
+    second: Walk_2
   - first:
-      213: -6892845273469897233
-    second: Hedgehog_Ingrid_Animation_3
+      213: -5409570386352685021
+    second: Walk_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hedgehog_Ingrid_Animation_0
+      name: Walk_0
       rect:
         serializedVersion: 2
-        x: 79
-        y: 140
-        width: 382
-        height: 287
+        x: 116
+        y: 429
+        width: 537
+        height: 580
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e7faa325bc3613f40800000000000000
-      internalID: 5706451927764217726
+      spriteID: cdce119379b920830800000000000000
+      internalID: 4035959289877228764
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hedgehog_Ingrid_Animation_1
+      name: Walk_1
       rect:
         serializedVersion: 2
-        x: 591
-        y: 143
-        width: 382
-        height: 304
+        x: 851
+        y: 433
+        width: 553
+        height: 573
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,20 +146,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ed87074e7048cb500800000000000000
-      internalID: 413350435243456734
+      spriteID: 1d6a1e1dec50c52f0800000000000000
+      internalID: -982904232830982447
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hedgehog_Ingrid_Animation_2
+      name: Walk_2
       rect:
         serializedVersion: 2
-        x: 1103
-        y: 141
-        width: 382
-        height: 286
+        x: 1667
+        y: 427
+        width: 471
+        height: 596
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,20 +168,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b991d7b20e7c6c5b0800000000000000
-      internalID: -5348367741839664741
+      spriteID: 984096a69a2512bf0800000000000000
+      internalID: -350908408369970039
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hedgehog_Ingrid_Animation_3
+      name: Walk_3
       rect:
         serializedVersion: 2
-        x: 1615
-        y: 143
-        width: 382
-        height: 304
+        x: 2433
+        y: 431
+        width: 456
+        height: 583
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,8 +190,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fe5b81f5eb1b750a0800000000000000
-      internalID: -6892845273469897233
+      spriteID: 320c9fd05685de4b0800000000000000
+      internalID: -5409570386352685021
       vertices: []
       indices: 
       edges: []
@@ -210,10 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Hedgehog_Ingrid_Animation_0: 5706451927764217726
-      Hedgehog_Ingrid_Animation_1: 413350435243456734
-      Hedgehog_Ingrid_Animation_2: -5348367741839664741
-      Hedgehog_Ingrid_Animation_3: -6892845273469897233
+      Walk_0: 4035959289877228764
+      Walk_1: -982904232830982447
+      Walk_2: -350908408369970039
+      Walk_3: -5409570386352685021
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

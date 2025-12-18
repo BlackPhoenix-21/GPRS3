@@ -1,19 +1,16 @@
 fileFormatVersion: 2
-guid: 7b6a8a60151755c428cbea5c3a3b70c8
+guid: 5b29969cff28d244f96fb1fab56f8e76
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5706451927764217726
-    second: Hedgehog_Ingrid_Animation_0
+      213: 2214009295784270163
+    second: Overlay_Background_Forest_Rotkappchen_low_grass_GrandmasHouse_0
   - first:
-      213: 413350435243456734
-    second: Hedgehog_Ingrid_Animation_1
+      213: -354995350416510831
+    second: Overlay_Background_Forest_Rotkappchen_low_grass_GrandmasHouse_1
   - first:
-      213: -5348367741839664741
-    second: Hedgehog_Ingrid_Animation_2
-  - first:
-      213: -6892845273469897233
-    second: Hedgehog_Ingrid_Animation_3
+      213: 4912532846723145475
+    second: Overlay_Background_Forest_Rotkappchen_low_grass_GrandmasHouse_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hedgehog_Ingrid_Animation_0
+      name: Overlay_Background_Forest_Rotkappchen_low_grass_GrandmasHouse_0
       rect:
         serializedVersion: 2
-        x: 79
-        y: 140
-        width: 382
-        height: 287
+        x: 673
+        y: 8
+        width: 80
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e7faa325bc3613f40800000000000000
-      internalID: 5706451927764217726
+      spriteID: 35952a469bdb9be10800000000000000
+      internalID: 2214009295784270163
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hedgehog_Ingrid_Animation_1
+      name: Overlay_Background_Forest_Rotkappchen_low_grass_GrandmasHouse_1
       rect:
         serializedVersion: 2
-        x: 591
-        y: 143
-        width: 382
-        height: 304
+        x: 789
+        y: 26
+        width: 32
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ed87074e7048cb500800000000000000
-      internalID: 413350435243456734
+      spriteID: 19032811c9dc21bf0800000000000000
+      internalID: -354995350416510831
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hedgehog_Ingrid_Animation_2
+      name: Overlay_Background_Forest_Rotkappchen_low_grass_GrandmasHouse_2
       rect:
         serializedVersion: 2
-        x: 1103
-        y: 141
-        width: 382
-        height: 286
+        x: 805
+        y: 0
+        width: 1115
+        height: 1062
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,30 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b991d7b20e7c6c5b0800000000000000
-      internalID: -5348367741839664741
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hedgehog_Ingrid_Animation_3
-      rect:
-        serializedVersion: 2
-        x: 1615
-        y: 143
-        width: 382
-        height: 304
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fe5b81f5eb1b750a0800000000000000
-      internalID: -6892845273469897233
+      spriteID: 30f1f5ca892dc2440800000000000000
+      internalID: 4912532846723145475
       vertices: []
       indices: 
       edges: []
@@ -210,10 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Hedgehog_Ingrid_Animation_0: 5706451927764217726
-      Hedgehog_Ingrid_Animation_1: 413350435243456734
-      Hedgehog_Ingrid_Animation_2: -5348367741839664741
-      Hedgehog_Ingrid_Animation_3: -6892845273469897233
+      Overlay_Background_Forest_Rotkappchen_low_grass_GrandmasHouse_0: 2214009295784270163
+      Overlay_Background_Forest_Rotkappchen_low_grass_GrandmasHouse_1: -354995350416510831
+      Overlay_Background_Forest_Rotkappchen_low_grass_GrandmasHouse_2: 4912532846723145475
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
