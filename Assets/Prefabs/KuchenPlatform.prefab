@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 5100246519516304278}
   - component: {fileID: 7510570954530835526}
   - component: {fileID: 8550343390475283683}
-  m_Layer: 0
+  - component: {fileID: 3579271421793764626}
+  - component: {fileID: 4880460637837328968}
+  m_Layer: 3
   m_Name: KuchenPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,3 +136,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &3579271421793764626
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059954751761904631}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &4880460637837328968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059954751761904631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fdd0343f036d74bb05869503a1d0f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 2
+  breakDelay: 3
+  cycleTime: 0.1
+  destroyDelay: 5
+  warnColor: {r: 1, g: 0, b: 0, a: 1}
+  slowMultiplier: 0.5
+  autoSetGroundLayer: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
