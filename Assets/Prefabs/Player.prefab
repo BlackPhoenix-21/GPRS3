@@ -323,8 +323,8 @@ MonoBehaviour:
   move: {fileID: -7736675200394916517, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
   jump: {fileID: -106678677691151490, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
   dash: {fileID: -11705204061271480, guid: 49fc235f1a299c847b4a278dcb0e6ee3, type: 3}
-  runSpeed: 15
-  jumpForce: 7.5
+  runSpeed: 13
+  jumpForce: 5.5
   doubleJumpForce: 7.5
   dashForce: 400
   airMovement: 0.5

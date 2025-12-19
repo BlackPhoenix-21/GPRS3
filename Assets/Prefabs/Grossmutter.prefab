@@ -181,11 +181,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   mapBorder: 7
-  chargCooldown: 10
-  chargingTime: 2
-  chargeSpeed: 6
-  chargeDuration: 1.5
-  walkSpeed: 2
+  chargCooldown: 6
+  chargingTime: 4
+  chargeSpeed: 7
+  chargeDuration: 3.5
+  walkSpeed: 3
   walkDistance: 1
   idleTime: 2.5
   stunTime: 2
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fec5f719d71ac48a0472b91d7ec72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 15
   trigger: 1
 --- !u!95 &8844803536187764547
 Animator:

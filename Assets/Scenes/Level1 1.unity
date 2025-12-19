@@ -7538,7 +7538,7 @@ Transform:
   m_GameObject: {fileID: 1249218370}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 235.03, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10688,10 +10688,6 @@ PrefabInstance:
     - target: {fileID: 4404503069114753968, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8734248208286099469, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8734248208286099469, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
       propertyPath: platformPrefab
@@ -16022,6 +16018,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hunter
       objectReference: {fileID: 0}
+    - target: {fileID: 5342773399232363335, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6966459644882013656, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.22
@@ -16066,6 +16066,18 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 573791240}
+    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: moveSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: stopRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: contactDamage
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 8884541279794748309, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: m_Size.x
       value: 2.6856558
