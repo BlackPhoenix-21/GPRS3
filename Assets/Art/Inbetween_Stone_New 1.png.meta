@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b488d8a592d28bc4c837d6e2d899c49e
+guid: d42d894a4b254214098e9172b44894a2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5724564504241984498
-    second: Side_Stone_Left_0
+      213: -1931101755768661803
+    second: Inbetween_Stone_New 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 163
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Side_Stone_Left_0
+      name: Inbetween_Stone_New 1_0
       rect:
         serializedVersion: 2
-        x: 346
-        y: 199
-        width: 305
-        height: 1139
+        x: 808
+        y: 435
+        width: 279
+        height: 719
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e0ca8d6d9e24e80b0800000000000000
-      internalID: -5724564504241984498
+      spriteID: 5d8964e3f295335e0800000000000000
+      internalID: -1931101755768661803
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6b61776834e81894fbbf4c258c6a8433
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Side_Stone_Left_0: -5724564504241984498
+      Inbetween_Stone_New 1_0: -1931101755768661803
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -103,12 +103,12 @@ TextureImporter:
       name: Side_Stone_Right_0
       rect:
         serializedVersion: 2
-        x: 1079
+        x: 1081
         y: 199
-        width: 310
+        width: 305
         height: 1150
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 37eda970cd9368944a3b9621362d916b
     internalID: 0
     vertices: []
     indices: 

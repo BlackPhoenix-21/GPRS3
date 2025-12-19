@@ -24,7 +24,14 @@ public class CameraFollow2D : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!target) return;
+        if (transform.position.x >= 235)
+        {
+            transform.position = new Vector2(235, transform.position.y);
+            return;
+        }
+
+        if (!target)
+            return;
 
         // базовая цель + смещение
         Vector3 desired = target.position + (Vector3)offset;
@@ -33,7 +40,7 @@ public class CameraFollow2D : MonoBehaviour
         // look-ahead по скорости, если указан Rigidbody2D
         if (targetRb)
         {
-            Vector2 v = targetRb.linearVelocity; 
+            Vector2 v = targetRb.linearVelocity;
             desired += (Vector3)(v * lookAheadScale);
         }
 
