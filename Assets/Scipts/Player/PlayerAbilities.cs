@@ -74,7 +74,6 @@ public class PlayerAbilities : MonoBehaviour
                 SpawnPrePlaceFalse();
             else
                 SpawnPrePlace();
-            return;
         }
         else
         {
@@ -89,20 +88,24 @@ public class PlayerAbilities : MonoBehaviour
         {
             Destroy(platforms[0]);
             platforms.RemoveAt(0);
+            pTimer.RemoveAt(0);
             pCount--;
         }
 
-        pTimer.ForEach(t => { t -= Time.deltaTime; });
-        pTimer.ForEach(t =>
+        for (int i = pTimer.Count - 1; i >= 0; i--)
         {
-            if (t > 0)
+            pTimer[i] -= Time.deltaTime;
+
+            if (pTimer[i] <= 0)
             {
-                Destroy(platforms[pTimer.IndexOf(t)]);
-                platforms.RemoveAt(pTimer.IndexOf(t));
+                Destroy(platforms[i]);
+                platforms.RemoveAt(i);
+                pTimer.RemoveAt(i);
                 pCount--;
             }
-        });
+        }
 
+        print(pCount);
         timer -= Time.deltaTime;
     }
 
