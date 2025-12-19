@@ -83,12 +83,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -350908408369970039, guid: 9c8af0b9c65b5da40ba534ce5dac3e4d, type: 3}
+  m_Sprite: {fileID: 4035959289877228764, guid: 93e252ab808de1c4b9fe4f4a716d7eb9, type: 3}
   m_Color: {r: 0.5176471, g: 0.05451757, b: 0.05451757, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 2.6856558, y: 2.9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -201,7 +201,7 @@ MonoBehaviour:
   stopWhenFinished: 1
   contactDamage: 10
   damageCooldown: 0.8
-  hazardBoxSize: {x: 0.6, y: 0.6}
+  hazardBoxSize: {x: 0.9, y: 1.21}
 --- !u!95 &199384759197769071
 Animator:
   serializedVersion: 7

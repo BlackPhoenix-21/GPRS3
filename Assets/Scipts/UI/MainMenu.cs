@@ -6,6 +6,12 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Scene")]
     public string gameSceneName = "Level1";
+    public GameObject won;
+
+    public void Start()
+    {
+        won.SetActive(GameManager.Instance.won);
+    }
 
     public void OnClickNewGame()
     {
@@ -26,5 +32,10 @@ public class MainMenu : MonoBehaviour
     public void OnClickExit()
     {
         Application.Quit();
+    }
+
+    public void OnClickDestory(GameObject go)
+    {
+        Destroy(go);
     }
 }

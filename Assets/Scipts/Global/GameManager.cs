@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 
     public bool isPaused = false;
     public float health = 100;
+    public bool won;
 
     private void Awake()
     {

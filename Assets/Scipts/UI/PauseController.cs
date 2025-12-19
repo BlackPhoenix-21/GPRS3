@@ -23,8 +23,13 @@ public class PauseController : MonoBehaviour
     [Header("Menu (Имя сцены с главным меню)")]
     public string menuSceneName = "MainMenu";
 
+    public bool once = false;
+
     private void Awake()
     {
+        if (once)
+            return;
+
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -36,6 +41,9 @@ public class PauseController : MonoBehaviour
 
     private void Update()
     {
+        if (once)
+            return;
+
         if (SceneManager.GetActiveScene().name == menuSceneName)
             return;
 
@@ -96,8 +104,12 @@ public class PauseController : MonoBehaviour
 
     public void BackToMenu()
     {
-        Resume();
-        GameManager.Instance.isPaused = false;
+
+        if (!once)
+        {
+            Resume();
+            GameManager.Instance.isPaused = false;
+        }
         SceneManager.LoadScene(menuSceneName);
     }
 }

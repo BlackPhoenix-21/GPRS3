@@ -52,6 +52,8 @@ public class EnemyNPC : MonoBehaviour
             Flip();
 
         rb.velocity = new Vector2(speed * dir, rb.velocity.y);
+
+        GetComponent<SpriteRenderer>().flipX = rb.linearVelocityX > 0f;
     }
 
     private bool IsWallAhead()

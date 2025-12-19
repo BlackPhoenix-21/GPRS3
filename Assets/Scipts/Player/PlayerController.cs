@@ -13,12 +13,14 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public float health = 100;
     private float invincibleTimer;
+    public GameObject deathScreeen;
 
     private Image healthBar;
     private TMP_Text healthText;
 
     void Awake()
     {
+        deathScreeen.SetActive(false);
         //health = GameManager.Instance.health;
         healthBar = GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "HB");
         healthText = GetComponentInChildren<TMP_Text>();
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void Death()
     {
-        throw new NotImplementedException();
+        deathScreeen.SetActive(true);
+        GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "UI").gameObject.SetActive(false);
     }
 }

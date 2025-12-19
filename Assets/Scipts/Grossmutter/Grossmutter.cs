@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEditor.Build;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Grossmutter : MonoBehaviour
@@ -147,6 +148,8 @@ public class Grossmutter : MonoBehaviour
         if (hitsTaken >= 4)
         {
             // End-Anim
+            SceneManager.LoadScene(0);
+            GameManager.Instance.won = true;
             print("death");
         }
 

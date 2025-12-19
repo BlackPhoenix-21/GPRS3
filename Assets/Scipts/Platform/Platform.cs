@@ -43,7 +43,6 @@ public class Platform : MonoBehaviour
         if (mode == Mode.None)
         {
             Debug.LogWarning($"{gameObject.name} has no Platformmode!");
-            return;
         }
 
         spriteR = GetComponent<SpriteRenderer>();
@@ -99,7 +98,7 @@ public class Platform : MonoBehaviour
         }
 
         rbPlatform.bodyType = RigidbodyType2D.Dynamic;
-        StartCoroutine(BreakCollider(0.5f));
+        StartCoroutine(BreakCollider(0.1f));
 
         yield return new WaitForSeconds(destroyDelay);
         Destroy(gameObject);

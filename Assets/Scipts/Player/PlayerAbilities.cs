@@ -33,6 +33,8 @@ public class PlayerAbilities : MonoBehaviour
     private Vector3 accPos;
     private Vector3 deadzonePos;
     private Vector3 deadzoneNeg;
+    private float platDespawn = 5f;
+    private List<float> pTimer = new List<float>();
 
     private void OnEnable()
     {
@@ -89,6 +91,17 @@ public class PlayerAbilities : MonoBehaviour
             platforms.RemoveAt(0);
             pCount--;
         }
+
+        pTimer.ForEach(t => { t -= Time.deltaTime; });
+        pTimer.ForEach(t =>
+        {
+            if (t > 0)
+            {
+                Destroy(platforms[pTimer.IndexOf(t)]);
+                platforms.RemoveAt(pTimer.IndexOf(t));
+                pCount--;
+            }
+        });
 
         timer -= Time.deltaTime;
     }
@@ -212,6 +225,7 @@ public class PlayerAbilities : MonoBehaviour
 
         pf.transform.position = accPos;
         platforms.Add(pf);
+        pTimer.Add(platDespawn);
         pCount++;
     }
 }
