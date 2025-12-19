@@ -172,9 +172,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerTag: Player
-  moveSpeed: 3.5
+  moveSpeed: 0.5
   aggroRange: 40
-  stopRange: 0.6
+  stopRange: 1
   useJumpPoints: 1
   autoJumpUpVelocity: 7
   autoJumpForwardVelocity: 7
@@ -194,12 +194,12 @@ MonoBehaviour:
   wallDistance: 0.9
   hazardCheck: {fileID: 4306117241459468370}
   hazardDistance: 0.9
-  offscreenSeconds: 3
+  offscreenSeconds: 5
   respawnMarginX: 2
   respawnYOffset: 0
   respawnGroundSearchDown: 10
   stopWhenFinished: 1
-  contactDamage: 10
+  contactDamage: 15
   damageCooldown: 0.8
   hazardBoxSize: {x: 0.9, y: 1.21}
 --- !u!95 &199384759197769071
