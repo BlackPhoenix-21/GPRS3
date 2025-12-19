@@ -26,7 +26,7 @@ public class CameraFollow2D : MonoBehaviour
     {
         if (transform.position.x >= 235)
         {
-            transform.position = new Vector2(235, transform.position.y);
+            transform.position = new Vector3(235, transform.position.y, -10);
             return;
         }
 
