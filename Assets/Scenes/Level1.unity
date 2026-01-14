@@ -9549,6 +9549,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4399581408264407676, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4404503069114753968, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
       propertyPath: m_Name
       value: Player
@@ -15984,13 +15988,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3523819002110522111, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_Size.x
+      value: 3.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3523819002110522111, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_Size.y
+      value: 3.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3523819002110522111, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 3523819002110522111, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.06
+      objectReference: {fileID: 0}
     - target: {fileID: 5342773399232363335, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: m_Name
       value: Hunter
       objectReference: {fileID: 0}
     - target: {fileID: 5342773399232363335, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6966459644882013656, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16036,6 +16056,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 573791240}
+    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: groundRadius
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -89,6 +89,8 @@ public class EnemyChaserHybrid2D : MonoBehaviour
     [System.Obsolete]
     private void FixedUpdate()
     {
+        Debug.Log($"grounded={grounded}, jumpTimer={jumpTimer}, hasJP={(currentJumpPoint!=null)}, wallCheck={(wallCheck!=null)}");
+
         if (stopWhenFinished && FinishZone.Finished)
         {
             rb.velocity = Vector2.zero;
