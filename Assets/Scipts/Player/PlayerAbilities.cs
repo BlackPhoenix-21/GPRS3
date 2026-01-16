@@ -33,6 +33,7 @@ public class PlayerAbilities : MonoBehaviour
     private Vector3 deadzoneNeg;
     private float platDespawn = 5f;
     private List<float> pTimer = new List<float>();
+    private bool inDeadZone;
 
     private void OnEnable()
     {
@@ -103,7 +104,6 @@ public class PlayerAbilities : MonoBehaviour
             }
         }
 
-        print(pCount);
         timer -= Time.deltaTime;
     }
 
@@ -173,7 +173,7 @@ public class PlayerAbilities : MonoBehaviour
 
     private void PrePlace(bool color)
     {
-        prePlace.GetComponent<Collider2D>().enabled = false;
+        prePlace.GetComponent<Collider2D>().isTrigger = true;
 
         if (!color)
             prePlace.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, alpha);
@@ -185,6 +185,12 @@ public class PlayerAbilities : MonoBehaviour
         {
             pfP.enabled = false;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Hazard"))
+            inDeadZone = true;
     }
 
     private void SpawnPrePlace()
@@ -217,7 +223,8 @@ public class PlayerAbilities : MonoBehaviour
         Destroy(prePlace);
         GameObject pf = PlatformSpawner();
 
-        if (InDeadZone(accPos))
+        inDeadZone = InDeadZone(accPos);
+        if (inDeadZone)
         {
             prePlace.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, alpha);
             Destroy(pf);

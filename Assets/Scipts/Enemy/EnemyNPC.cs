@@ -17,6 +17,10 @@ public class EnemyNPC : MonoBehaviour
 
     private readonly RaycastHit2D[] hits = new RaycastHit2D[8];
     private ContactFilter2D filter;
+    private bool groundedL = true;
+    private bool groundedR = false;
+    public LayerMask groundMask;
+    private float groundCheckDistance = 0.3f;
 
     private void Awake()
     {
@@ -31,6 +35,15 @@ public class EnemyNPC : MonoBehaviour
 
     private void Update()
     {
+        IsGrounded();
+        if (groundedL || groundedR)
+            rb.gravityScale = 0f;
+        else
+            rb.gravityScale = 1f;
+
+        if (rb.gravityScale == 0f)
+            rb.linearVelocityY = 0f;
+
         if (activated) return;
 
         if (Camera.main == null) return;
@@ -39,19 +52,18 @@ public class EnemyNPC : MonoBehaviour
             activated = true;
     }
 
-    [System.Obsolete]
     private void FixedUpdate()
     {
         if (!activated)
         {
-            rb.velocity = new Vector2(0f, rb.velocity.y);
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocityY);
             return;
         }
 
         if (IsWallAhead())
             Flip();
 
-        rb.velocity = new Vector2(speed * dir, rb.velocity.y);
+        rb.linearVelocity = new Vector2(speed * dir, rb.linearVelocity.y);
 
         GetComponent<SpriteRenderer>().flipX = rb.linearVelocityX > 0f;
     }
@@ -75,8 +87,33 @@ public class EnemyNPC : MonoBehaviour
             if (Mathf.Abs(n.x) > 0.6f)
                 return true;
         }
-
         return false;
+    }
+
+    private void IsGrounded()
+    {
+        if (col == null)
+        {
+            groundedL = false;
+            groundedR = false;
+            return;
+        }
+
+        float rayLength = groundCheckDistance;
+
+        // Linke untere Ecke prüfen - Start von der unteren Kante
+        Vector2 leftBottom = new Vector2(col.bounds.min.x + 0.05f, col.bounds.min.y);
+        RaycastHit2D hitLeft = Physics2D.Raycast(leftBottom, Vector2.down, rayLength, groundMask);
+
+        // Rechte untere Ecke prüfen - Start von der unteren Kante
+        Vector2 rightBottom = new Vector2(col.bounds.max.x - 0.05f, col.bounds.min.y);
+        RaycastHit2D hitRight = Physics2D.Raycast(rightBottom, Vector2.down, rayLength, groundMask);
+
+        groundedL = hitLeft.collider != null;
+        groundedR = hitRight.collider != null;
+
+        Debug.DrawRay(leftBottom, Vector2.down * rayLength, groundedL ? Color.yellow : Color.blue);
+        Debug.DrawRay(rightBottom, Vector2.down * rayLength, groundedR ? Color.green : Color.red);
     }
 
     private void Flip()

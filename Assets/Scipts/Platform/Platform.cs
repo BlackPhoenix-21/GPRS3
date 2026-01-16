@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Platform : MonoBehaviour
 {
-    public enum Mode { None, Break, SlowPlayer }
+    public enum Mode { None, Break, SlowPlayer, Unactive }
     public Mode mode = Mode.None;
 
     [Header("Break")]

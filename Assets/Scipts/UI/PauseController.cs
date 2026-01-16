@@ -104,7 +104,6 @@ public class PauseController : MonoBehaviour
 
     public void BackToMenu()
     {
-
         if (!once)
         {
             Resume();
