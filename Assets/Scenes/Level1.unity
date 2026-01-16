@@ -16012,6 +16012,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5724622084000705168, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 5724622084000705168, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.28
+      objectReference: {fileID: 0}
     - target: {fileID: 6966459644882013656, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.22
@@ -16057,8 +16065,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 573791240}
     - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: moveSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: groundRadius
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: groundLayer.m_Bits

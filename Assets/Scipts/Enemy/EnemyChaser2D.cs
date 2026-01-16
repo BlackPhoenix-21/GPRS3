@@ -67,6 +67,8 @@ public class EnemyChaserHybrid2D : MonoBehaviour
     private bool jumpingByPoint;
 
     private Animator anim;
+    public float groundCheckDistance = 1f;
+    public LayerMask groundMask;
 
     private void Awake()
     {
@@ -84,12 +86,13 @@ public class EnemyChaserHybrid2D : MonoBehaviour
             var p = GameObject.FindGameObjectWithTag(playerTag);
             if (p != null) player = p.transform;
         }
+        IsGrounded();
     }
 
     [System.Obsolete]
     private void FixedUpdate()
     {
-        Debug.Log($"grounded={grounded}, jumpTimer={jumpTimer}, hasJP={(currentJumpPoint!=null)}, wallCheck={(wallCheck!=null)}");
+        //Debug.Log($"grounded={grounded}, jumpTimer={jumpTimer}, hasJP={(currentJumpPoint != null)}, wallCheck={(wallCheck != null)}");
 
         if (stopWhenFinished && FinishZone.Finished)
         {
@@ -103,7 +106,7 @@ public class EnemyChaserHybrid2D : MonoBehaviour
             return;
         }
 
-        grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
+
         if (grounded && jumpingByPoint)
         {
             jumpingByPoint = false;
@@ -260,5 +263,26 @@ public class EnemyChaserHybrid2D : MonoBehaviour
             Gizmos.DrawWireCube(cR, hazardBoxSize);
             Gizmos.DrawWireCube(cL, hazardBoxSize);
         }
+    }
+    private void IsGrounded()
+    {
+        Collider2D col = GetComponent<Collider2D>();
+        if (col == null)
+        {
+            grounded = false;
+            return;
+        }
+
+        Vector2 origin = col.bounds.center;
+
+        float rayLength = col.bounds.extents.y + groundCheckDistance;
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, rayLength, groundMask);
+
+        grounded = hit.collider != null;
+        if (grounded)
+            anim.SetBool("Grounded", true);
+
+        Debug.DrawRay(origin, Vector2.down * rayLength, grounded ? Color.green : Color.red);
     }
 }
