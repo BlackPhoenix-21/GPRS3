@@ -55,6 +55,9 @@ public class EnemyChaserHybrid2D : MonoBehaviour
     [Header("Hazard box check")]
     [SerializeField] private Vector2 hazardBoxSize = new Vector2(0.6f, 0.6f);
 
+    [SerializeField] private SpriteRenderer sprite;
+
+
     private Rigidbody2D rb;
     private bool grounded;
     private int dir = 1;
@@ -72,8 +75,10 @@ public class EnemyChaserHybrid2D : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+     rb = GetComponent<Rigidbody2D>();
+      anim = GetComponent<Animator>();
+
+        if (sprite == null) sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
@@ -129,6 +134,9 @@ public class EnemyChaserHybrid2D : MonoBehaviour
         }
 
         dir = dx >= 0 ? 1 : -1;
+        if (sprite != null)
+        sprite.flipX = (dir < 0);
+
 
         if (IsOffscreen())
         {

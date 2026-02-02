@@ -15,11 +15,13 @@ public class EnemyBullet2D : MonoBehaviour
     }
 
     [System.Obsolete]
-    public void Init(Vector2 direction)
+    public void Init(Vector2 direction, GameObject gameObject)
     {
-        lifeTimer = lifeTime;
-        rb.velocity = direction * speed;
+    direction = direction.normalized;
+    lifeTimer = lifeTime;
+    rb.velocity = direction * speed;
     }
+
 
     private void Update()
     {
