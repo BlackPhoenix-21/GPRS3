@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 82773336}
   m_Layer: 3
   m_Name: Side_Stone_Left_0 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3640,7 +3640,7 @@ GameObject:
   - component: {fileID: 621312333}
   m_Layer: 3
   m_Name: Side_Stone_Left_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7059,7 +7059,7 @@ GameObject:
   - component: {fileID: 1253465899}
   m_Layer: 3
   m_Name: Inbetween_Stone_New_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7826,7 +7826,7 @@ GameObject:
   - component: {fileID: 1324402796}
   m_Layer: 3
   m_Name: Inbetween_Stone_New_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9509,6 +9509,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 516738525567144451, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
+      propertyPath: fall
+      value: Wall
+      objectReference: {fileID: 0}
     - target: {fileID: 802236171080570506, guid: 914c4f64ecd108f47b77e939671a1058, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.1
@@ -12490,7 +12494,7 @@ GameObject:
   - component: {fileID: 2137714875}
   m_Layer: 3
   m_Name: Side_Stone_Right_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12849,7 +12853,7 @@ GameObject:
   - component: {fileID: 6302903810604352368}
   m_Layer: 3
   m_Name: Inbetween_Stone_New_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12961,7 +12965,7 @@ GameObject:
   - component: {fileID: 5887301561016248362}
   m_Layer: 3
   m_Name: Inbetween_Stone_New_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13035,7 +13039,7 @@ GameObject:
   - component: {fileID: 269889473540886567}
   m_Layer: 3
   m_Name: Side_Stone_Right_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13054,7 +13058,7 @@ GameObject:
   - component: {fileID: 6730725035732375539}
   m_Layer: 3
   m_Name: Inbetween_Stone_New_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13389,7 +13393,7 @@ GameObject:
   - component: {fileID: 2391027349162918217}
   m_Layer: 3
   m_Name: Side_Stone_Left_0 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13626,7 +13630,7 @@ GameObject:
   - component: {fileID: 2375285744061978718}
   m_Layer: 3
   m_Name: Side_Stone_Left_0 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13644,7 +13648,7 @@ GameObject:
   - component: {fileID: 2725197687437506904}
   m_Layer: 3
   m_Name: Side_Stone_Left_0 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14185,7 +14189,7 @@ GameObject:
   - component: {fileID: 2638890376625922373}
   m_Layer: 3
   m_Name: Side_Stone_Right_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14791,7 +14795,7 @@ GameObject:
   - component: {fileID: 1053125524260941325}
   m_Layer: 3
   m_Name: Side_Stone_Left_0 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15813,7 +15817,7 @@ GameObject:
   - component: {fileID: 7136594638651584522}
   m_Layer: 3
   m_Name: Side_Stone_Right_0 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15832,7 +15836,7 @@ GameObject:
   - component: {fileID: 3675855106859688504}
   m_Layer: 3
   m_Name: Inbetween_Stone_New_0 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16035,7 +16039,7 @@ GameObject:
   - component: {fileID: 8000337735444196851}
   m_Layer: 3
   m_Name: Side_Stone_Right_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16248,7 +16252,7 @@ GameObject:
   - component: {fileID: 2827883301740599829}
   m_Layer: 3
   m_Name: Inbetween_Stone_New_0
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
