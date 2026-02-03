@@ -27,6 +27,7 @@ public class EnemyShooter2D : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    [System.Obsolete]
     private void Update()
     {
         // найти игрока
