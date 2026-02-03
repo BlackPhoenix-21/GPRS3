@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Grossmutter : MonoBehaviour
 {
+    [Header("End Portal")]
+    public EndBookPortal endPortal;
+
     public enum GrossmutterState
     {
         None,
@@ -56,7 +59,7 @@ public class Grossmutter : MonoBehaviour
     private bool wallR;
     private bool wallL;
     public LayerMask wallmask;
-    private float wallCheckDistance = 0.3f;
+    private float wallCheckDistance = 0.5f;
 
     void Start()
     {
@@ -86,7 +89,15 @@ public class Grossmutter : MonoBehaviour
 
         Wall();
         if (wallL || wallR)
-            rig2D.linearVelocityX = 0f;
+            {
+                transform.position += new Vector3(wallL? 0.1f : -0.1f, 0, 0);
+            try{
+            StopCoroutine(chargingCoroutine);
+            } catch {}
+            rig2D.linearVelocity = Vector2.zero;
+            anim.SetBool("Dash", false);
+            state = GrossmutterState.Idle;
+            print("xjkfjasfkjawk");}
 
         if (hit)
         {
@@ -167,13 +178,18 @@ public class Grossmutter : MonoBehaviour
 
         hitsTaken++;
         if (hitsTaken >= 4)
-        {
-            // End-Anim
-            SceneManager.LoadScene(0);
-            GameManager.Instance.won = true;
-            print("death");
-        }
+    {
+    GameManager.Instance.won = true;
+    print("death");
+    if (endPortal != null)
+     endPortal.ActivatePortal();
+    rig2D.linearVelocity = Vector2.zero;
 
+    var col = GetComponent<Collider2D>();
+    if (col != null) col.enabled = false;
+    enabled = false;
+    return;
+    }
         state = GrossmutterState.Stunned;
     }
 
@@ -229,11 +245,11 @@ public class Grossmutter : MonoBehaviour
 
         float rayLength = groundCheckDistance;
 
-        // Linke untere Ecke prüfen - Start von der unteren Kante
+        // Linke untere Ecke prï¿½fen - Start von der unteren Kante
         Vector2 leftBottom = new Vector2(col.bounds.min.x + 0.05f, col.bounds.min.y);
         RaycastHit2D hitLeft = Physics2D.Raycast(leftBottom, Vector2.down, rayLength, groundMask);
 
-        // Rechte untere Ecke prüfen - Start von der unteren Kante
+        // Rechte untere Ecke prï¿½fen - Start von der unteren Kante
         Vector2 rightBottom = new Vector2(col.bounds.max.x - 0.05f, col.bounds.min.y);
         RaycastHit2D hitRight = Physics2D.Raycast(rightBottom, Vector2.down, rayLength, groundMask);
 
@@ -255,11 +271,11 @@ public class Grossmutter : MonoBehaviour
 
         float rayLength = wallCheckDistance;
 
-        // Linke Wand prüfen - vom Mittelpunkt nach links
+        // Linke Wand prï¿½fen - vom Mittelpunkt nach links
         Vector2 leftCenter = new Vector2(col.bounds.min.x, col.bounds.center.y);
         RaycastHit2D hitLeft = Physics2D.Raycast(leftCenter, Vector2.left, rayLength, wallmask);
 
-        // Rechte Wand prüfen - vom Mittelpunkt nach rechts
+        // Rechte Wand prï¿½fen - vom Mittelpunkt nach rechts
         Vector2 rightCenter = new Vector2(col.bounds.max.x, col.bounds.center.y);
         RaycastHit2D hitRight = Physics2D.Raycast(rightCenter, Vector2.right, rayLength, wallmask);
 

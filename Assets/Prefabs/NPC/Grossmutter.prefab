@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8871e6380b8ea4f875b3c4fc02c206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endPortal: {fileID: 0}
   state: 0
   mapBorder: 7
   chargCooldown: 6
@@ -192,6 +193,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   hit: 0
+  wallmask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &2449442519933979609
 MonoBehaviour:
   m_ObjectHideFlags: 0
