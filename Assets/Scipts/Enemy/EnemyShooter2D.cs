@@ -26,6 +26,7 @@ public class EnemyShooter2D : MonoBehaviour
             sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
+    [System.Obsolete]
     private void Update()
     {
         // найти игрока
