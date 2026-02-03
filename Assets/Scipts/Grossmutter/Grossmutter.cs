@@ -47,12 +47,22 @@ public class Grossmutter : MonoBehaviour
     private float rundir;
     private int hitsTaken;
     private Animator anim;
+    private Collider2D col;
+    private bool groundedL = true;
+    private bool groundedR = false;
+    public LayerMask groundMask;
+    private float groundCheckDistance = 0.3f;
     public bool hit;
+    private bool wallR;
+    private bool wallL;
+    public LayerMask wallmask;
+    private float wallCheckDistance = 0.3f;
 
     void Start()
     {
         rig2D = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        col = GetComponent<Collider2D>();
         player = GameObject.FindWithTag("Player");
 
         state = GrossmutterState.Idle;
@@ -65,6 +75,19 @@ public class Grossmutter : MonoBehaviour
 
     void Update()
     {
+        IsGrounded();
+        if (groundedL || groundedR)
+            rig2D.gravityScale = 0f;
+        else
+            rig2D.gravityScale = 1f;
+
+        if (rig2D.gravityScale == 0f)
+            rig2D.linearVelocityY = 0f;
+
+        Wall();
+        if (wallL || wallR)
+            rig2D.linearVelocityX = 0f;
+
         if (hit)
         {
             print("hit");
@@ -157,7 +180,7 @@ public class Grossmutter : MonoBehaviour
     private IEnumerator Charging()
     {
         isCharging = true;
-
+        anim.SetTrigger("DashStart");
         yield return new WaitForSeconds(chargingTime);
 
         float chargeTimer = 0f;
@@ -193,5 +216,57 @@ public class Grossmutter : MonoBehaviour
         {
             transform.Translate(moveDirection);
         }
+    }
+
+    private void IsGrounded()
+    {
+        if (col == null)
+        {
+            groundedL = false;
+            groundedR = false;
+            return;
+        }
+
+        float rayLength = groundCheckDistance;
+
+        // Linke untere Ecke prüfen - Start von der unteren Kante
+        Vector2 leftBottom = new Vector2(col.bounds.min.x + 0.05f, col.bounds.min.y);
+        RaycastHit2D hitLeft = Physics2D.Raycast(leftBottom, Vector2.down, rayLength, groundMask);
+
+        // Rechte untere Ecke prüfen - Start von der unteren Kante
+        Vector2 rightBottom = new Vector2(col.bounds.max.x - 0.05f, col.bounds.min.y);
+        RaycastHit2D hitRight = Physics2D.Raycast(rightBottom, Vector2.down, rayLength, groundMask);
+
+        groundedL = hitLeft.collider != null;
+        groundedR = hitRight.collider != null;
+
+        Debug.DrawRay(leftBottom, Vector2.down * rayLength, groundedL ? Color.yellow : Color.blue);
+        Debug.DrawRay(rightBottom, Vector2.down * rayLength, groundedR ? Color.green : Color.red);
+    }
+
+    private void Wall()
+    {
+        if (col == null)
+        {
+            wallR = false;
+            wallL = false;
+            return;
+        }
+
+        float rayLength = wallCheckDistance;
+
+        // Linke Wand prüfen - vom Mittelpunkt nach links
+        Vector2 leftCenter = new Vector2(col.bounds.min.x, col.bounds.center.y);
+        RaycastHit2D hitLeft = Physics2D.Raycast(leftCenter, Vector2.left, rayLength, wallmask);
+
+        // Rechte Wand prüfen - vom Mittelpunkt nach rechts
+        Vector2 rightCenter = new Vector2(col.bounds.max.x, col.bounds.center.y);
+        RaycastHit2D hitRight = Physics2D.Raycast(rightCenter, Vector2.right, rayLength, wallmask);
+
+        wallL = hitLeft.collider != null;
+        wallR = hitRight.collider != null;
+
+        Debug.DrawRay(leftCenter, Vector2.left * rayLength, wallL ? Color.yellow : Color.blue);
+        Debug.DrawRay(rightCenter, Vector2.right * rayLength, wallR ? Color.green : Color.red);
     }
 }

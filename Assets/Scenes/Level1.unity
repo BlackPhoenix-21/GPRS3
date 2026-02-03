@@ -4397,37 +4397,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2799611c0769f14aa9238ffe8c87c2f, type: 3}
---- !u!1 &708774665
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 708774666}
-  m_Layer: 0
-  m_Name: FirePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &708774666
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708774665}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0699997, y: 0.9, z: -0.28466055}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1179026125}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &726460201 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 636025022153519717, guid: d56d72d821bec004686773bbcd7b60e5, type: 3}
@@ -6674,39 +6643,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1179026119 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5342773399232363335, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-  m_PrefabInstance: {fileID: 7881220767618967670}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1179026125 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6966459644882013656, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-  m_PrefabInstance: {fileID: 7881220767618967670}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1179026126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1179026119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1003ef633524f447914283f7692d02c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 573791240}
-  playerTag: Player
-  firePoint: {fileID: 708774666}
-  bulletPrefab: {fileID: 1576569199818057174, guid: 0c6086d16a0563d4a87a946cce174464, type: 3}
-  fireRate: 2
-  shootRange: 8
-  minShootDistance: 1.2
-  useLineOfSight: 1
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!1 &1185299231
 GameObject:
   m_ObjectHideFlags: 0
@@ -16123,37 +16059,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3523819002110522111, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: m_Size.x
-      value: 3.31
-      objectReference: {fileID: 0}
-    - target: {fileID: 3523819002110522111, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: m_Size.y
-      value: 3.19
-      objectReference: {fileID: 0}
-    - target: {fileID: 3523819002110522111, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 3523819002110522111, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.06
-      objectReference: {fileID: 0}
     - target: {fileID: 5342773399232363335, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: m_Name
       value: Hunter
-      objectReference: {fileID: 0}
-    - target: {fileID: 5342773399232363335, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5724622084000705168, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 5724622084000705168, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.28
       objectReference: {fileID: 0}
     - target: {fileID: 6966459644882013656, guid: 6a3716108c698374c96df766b13abc25, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16199,32 +16107,26 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 573791240}
-    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: moveSpeed
-      value: 4
+    - target: {fileID: 8563143623905502158, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 573791240}
+    - target: {fileID: 8884541279794748309, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: groundRadius
-      value: 0.25
+    - target: {fileID: 8884541279794748309, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_Color.g
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: groundMask.m_Bits
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7151070687830467637, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      propertyPath: groundLayer.m_Bits
-      value: 8
+    - target: {fileID: 8884541279794748309, guid: 6a3716108c698374c96df766b13abc25, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6966459644882013656, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 708774666}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5342773399232363335, guid: 6a3716108c698374c96df766b13abc25, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1179026126}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a3716108c698374c96df766b13abc25, type: 3}
 --- !u!4 &7902271601103969005
 Transform:

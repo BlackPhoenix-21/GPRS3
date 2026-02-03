@@ -20,9 +20,13 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         deathScreeen.SetActive(false);
-        //health = GameManager.Instance.health;
         healthBar = GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "HB");
         healthText = GetComponentInChildren<TMP_Text>();
+    }
+
+    void Start()
+    {
+        health = GameManager.Instance.health;
     }
 
     void Update()
@@ -44,7 +48,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player bekommt Schaden. Health: " + health);
     }
 
-    private void Death()
+    void Death()
     {
         deathScreeen.SetActive(true);
         GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "UI").gameObject.SetActive(false);
