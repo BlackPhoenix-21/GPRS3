@@ -535,6 +535,7 @@ MonoBehaviour:
   invincibleCooldown: 2
   health: 100
   deathScreeen: {fileID: 7983789655936016874}
+  UI: {fileID: 4889858182906356287}
 --- !u!114 &516738525567144451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -929,7 +930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2931083554239046777
 RectTransform:
   m_ObjectHideFlags: 0

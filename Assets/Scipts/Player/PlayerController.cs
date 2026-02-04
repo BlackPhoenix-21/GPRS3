@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private Image healthBar;
     private TMP_Text healthText;
+    public GameObject UI;
 
     void Awake()
     {
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         health = GameManager.Instance.health;
+        UI.SetActive(true);
     }
 
     void Update()
@@ -51,6 +53,6 @@ public class PlayerController : MonoBehaviour
     void Death()
     {
         deathScreeen.SetActive(true);
-        GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "UI").gameObject.SetActive(false);
+        UI.SetActive(false);
     }
 }
