@@ -33,6 +33,7 @@ public class PlayerAbilities : MonoBehaviour
     private Vector3 deadzoneNeg;
     private float platDespawn = 5f;
     private List<float> pTimer = new List<float>();
+    public List<GameObject> imgCake = new List<GameObject>();
     private bool inDeadZone;
 
     private void OnEnable()
@@ -52,6 +53,7 @@ public class PlayerAbilities : MonoBehaviour
     private void Start()
     {
         NewDeadzone();
+
     }
 
     private void NewDeadzone()
@@ -62,6 +64,29 @@ public class PlayerAbilities : MonoBehaviour
 
     private void Update()
     {
+        if (pCount == 0)
+        {
+            imgCake[0].SetActive(true);
+            imgCake[1].SetActive(false);
+            imgCake[2].SetActive(false);
+        }
+        else if (pCount == 1)
+        {
+            imgCake[0].SetActive(false);
+            imgCake[1].SetActive(true);
+            imgCake[2].SetActive(false);
+        }
+        else if (pCount == 2)
+        {
+            imgCake[0].SetActive(false);
+            imgCake[1].SetActive(false);
+            imgCake[2].SetActive(true);
+        }
+        else
+        {
+            imgCake.ForEach(x => x.SetActive(false));
+        }
+
         if (platformSpawing.action.WasReleasedThisFrame() && timer < 0 && pCount < pCountMax)
         {
             SpawnPlatform();
