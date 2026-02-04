@@ -168,6 +168,3 @@ MonoBehaviour:
   speed: 12
   lifeTime: 3
   damage: 10
-  destroyOnLayers:
-    serializedVersion: 2
-    m_Bits: 8

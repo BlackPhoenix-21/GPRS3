@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -93,11 +94,19 @@ public class Grossmutter : MonoBehaviour
                 transform.position += new Vector3(wallL? 0.1f : -0.1f, 0, 0);
             try{
             StopCoroutine(chargingCoroutine);
-            } catch {}
+            } catch (Exception ex)
+            {
+                print(ex.Message);
+            }
             rig2D.linearVelocity = Vector2.zero;
             anim.SetBool("Dash", false);
             state = GrossmutterState.Idle;
-            print("xjkfjasfkjawk");}
+            chargTimer = chargCooldown;
+            idleTimer = idleTime;
+            isCharging = false;
+            chargingCoroutine = null;
+            print("xjkfjasfkjawk");
+            }
 
         if (hit)
         {
@@ -127,7 +136,7 @@ public class Grossmutter : MonoBehaviour
                 {
                     state = GrossmutterState.Walk;
                     walkStartPosition = transform.position;
-                    walkDirection = Random.Range(0, 2) == 0 ? -1f : 1f;
+                    walkDirection = UnityEngine.Random.Range(0, 2) == 0 ? -1f : 1f;
                 }
                 break;
 
