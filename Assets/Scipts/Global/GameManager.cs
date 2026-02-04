@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -50,6 +53,26 @@ public class GameManager : MonoBehaviour
             timer = 0f;
             SceneManager.LoadScene(0);
         }
+    }
+
+    public void StartCoro()
+    {
+        StartCoroutine(Tutorial());
+    }
+
+    private IEnumerator Tutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+        yield return new WaitForSeconds(0.1f);
+        GameObject bc2 = GameObject.Find("BC1");
+        GameObject bc1 = GameObject.Find("BC2");
+        bc1.SetActive(true);
+        bc2.SetActive(false);
+        yield return new WaitForSeconds(5f);
+        bc1.SetActive(false);
+        bc2.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("Level1");
     }
 
     public void OnSceneSwitch()

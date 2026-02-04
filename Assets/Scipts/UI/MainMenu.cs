@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnClickNewGame()
     {
-        SceneManager.LoadScene(gameSceneName);
+        GameManager.Instance.StartCoro();
     }
 
     public void OnClickContinue()
