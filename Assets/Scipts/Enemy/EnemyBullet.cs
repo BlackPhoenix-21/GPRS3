@@ -26,13 +26,17 @@ public class EnemyBullet2D : MonoBehaviour
     public void Init(Vector2 direction, GameObject ownerObject)
     {
         owner = ownerObject;
+
         Vector2 dir = direction.normalized;
+
         rb.velocity = dir * speed;
+
         RotateToDirection(dir);
     }
 
     private void RotateToDirection(Vector2 dir)
     {
+        // угол в градусах
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
@@ -47,6 +51,7 @@ public class EnemyBullet2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+  
         if (other.gameObject == owner)
             return;
 
@@ -59,6 +64,7 @@ public class EnemyBullet2D : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         if (!other.isTrigger)
             Destroy(gameObject);
     }

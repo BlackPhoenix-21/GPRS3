@@ -17,14 +17,13 @@ public class EnemyShooter2D : MonoBehaviour
 
     [Header("Visual")]
     [SerializeField] private SpriteRenderer sprite;
-    private Animator anim;
+
     private float fireTimer;
 
     private void Awake()
     {
         if (sprite == null)
             sprite = GetComponentInChildren<SpriteRenderer>();
-        anim = GetComponent<Animator>();
     }
 
     [System.Obsolete]
@@ -58,9 +57,9 @@ public class EnemyShooter2D : MonoBehaviour
         fireTimer = fireRate;
     }
 
+    [System.Obsolete]
     private void Shoot(Vector2 direction)
     {
-        anim.SetTrigger("Shoot");
         Vector3 spawnPos = transform.position;
 
         // если игрок почти прямо сверху / снизу
@@ -72,5 +71,6 @@ public class EnemyShooter2D : MonoBehaviour
         spawnPos.y += shootOffset.y;
 
         EnemyBullet2D bullet = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+        bullet.Init(direction, gameObject);
     }
 }
