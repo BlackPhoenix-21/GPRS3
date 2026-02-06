@@ -90,11 +90,13 @@ public class Grossmutter : MonoBehaviour
 
         Wall();
         if (wallL || wallR)
+        {
+            transform.position += new Vector3(wallL ? 0.1f : -0.1f, 0, 0);
+            try
             {
-                transform.position += new Vector3(wallL? 0.1f : -0.1f, 0, 0);
-            try{
-            StopCoroutine(chargingCoroutine);
-            } catch (Exception ex)
+                StopCoroutine(chargingCoroutine);
+            }
+            catch (Exception ex)
             {
                 print(ex.Message);
             }
@@ -106,7 +108,7 @@ public class Grossmutter : MonoBehaviour
             isCharging = false;
             chargingCoroutine = null;
             print("xjkfjasfkjawk");
-            }
+        }
 
         if (hit)
         {
@@ -187,18 +189,18 @@ public class Grossmutter : MonoBehaviour
 
         hitsTaken++;
         if (hitsTaken >= 4)
-    {
-    GameManager.Instance.won = true;
-    print("death");
-    if (endPortal != null)
-     endPortal.ActivatePortal();
-    rig2D.linearVelocity = Vector2.zero;
+        {
+            GameManager.Instance.won = true;
+            print("death");
+            if (endPortal != null)
+                endPortal.ActivatePortal();
+            rig2D.linearVelocity = Vector2.zero;
 
-    var col = GetComponent<Collider2D>();
-    if (col != null) col.enabled = false;
-    enabled = false;
-    return;
-    }
+            var col = GetComponent<Collider2D>();
+            if (col != null) col.enabled = false;
+            enabled = false;
+            return;
+        }
         state = GrossmutterState.Stunned;
     }
 

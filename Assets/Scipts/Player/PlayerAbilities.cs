@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerAbilities : MonoBehaviour
@@ -64,27 +65,30 @@ public class PlayerAbilities : MonoBehaviour
 
     private void Update()
     {
-        if (pCount == 0)
+        if (SceneManager.GetActiveScene().name != "BossLevel1")
         {
-            imgCake[0].SetActive(true);
-            imgCake[1].SetActive(false);
-            imgCake[2].SetActive(false);
-        }
-        else if (pCount == 1)
-        {
-            imgCake[0].SetActive(false);
-            imgCake[1].SetActive(true);
-            imgCake[2].SetActive(false);
-        }
-        else if (pCount == 2)
-        {
-            imgCake[0].SetActive(false);
-            imgCake[1].SetActive(false);
-            imgCake[2].SetActive(true);
-        }
-        else
-        {
-            imgCake.ForEach(x => x.SetActive(false));
+            if (pCount == 0)
+            {
+                imgCake[0].SetActive(true);
+                imgCake[1].SetActive(false);
+                imgCake[2].SetActive(false);
+            }
+            else if (pCount == 1)
+            {
+                imgCake[0].SetActive(false);
+                imgCake[1].SetActive(true);
+                imgCake[2].SetActive(false);
+            }
+            else if (pCount == 2)
+            {
+                imgCake[0].SetActive(false);
+                imgCake[1].SetActive(false);
+                imgCake[2].SetActive(true);
+            }
+            else
+            {
+                imgCake.ForEach(x => x.SetActive(false));
+            }
         }
 
         if (platformSpawing.action.WasReleasedThisFrame() && timer < 0 && pCount < pCountMax)

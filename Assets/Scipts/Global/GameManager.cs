@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     [Header("AFK timer")]
     public float maxTime = 60f;
     public float timer;
+
+    private VideoPlayer player;
 
     private void Awake()
     {
@@ -31,8 +34,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // Если игра выиграна (финал) — не надо выкидывать в меню по таймеру
-        if (won) return;
+        if (won)
+            return;
 
         bool anyInput =
             (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame) ||
@@ -53,6 +56,11 @@ public class GameManager : MonoBehaviour
             timer = 0f;
             SceneManager.LoadScene(0);
         }
+
+        if (player == null)
+            return;
+        if (!player.isPlaying)
+            SceneManager.LoadScene("Level1");
     }
 
     public void StartCoro()
@@ -60,10 +68,21 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Tutorial());
     }
 
+    private IEnumerator VideoPlayer()
+    {
+        SceneManager.LoadScene("Cutscene");
+        yield return new WaitForSeconds(0.1f);
+        player = GameObject.FindAnyObjectByType<VideoPlayer>();
+        if (player == null)
+        {
+            print("null player");
+        }
+    }
+
     private IEnumerator Tutorial()
     {
         SceneManager.LoadScene("Tutorial");
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
         GameObject bc2 = GameObject.Find("BC1");
         GameObject bc1 = GameObject.Find("BC2");
         bc1.SetActive(true);
@@ -72,7 +91,7 @@ public class GameManager : MonoBehaviour
         bc1.SetActive(false);
         bc2.SetActive(true);
         yield return new WaitForSeconds(5f);
-        SceneManager.LoadScene("Level1");
+        StartCoroutine(VideoPlayer());
     }
 
     public void OnSceneSwitch()
