@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckDistance = 0.3f;
     private Rigidbody2D rb;
     public string fall;
+    public string wall = "Wall";
 
     [Header("Debug Information")]
     public bool grounded;
@@ -169,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D c)
     {
-        if (c.transform.CompareTag(fall))
+        if (c.transform.CompareTag(fall) || c.transform.CompareTag(wall))
         {
             Vector2 contactPoint = c.contacts[0].point;
             Vector2 playerPos = transform.position;

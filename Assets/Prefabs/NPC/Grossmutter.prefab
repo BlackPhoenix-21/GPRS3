@@ -179,11 +179,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endPortal: {fileID: 0}
   state: 0
-  mapBorder: 7
+  mapBorder: 6.5
   chargCooldown: 6
   chargingTime: 4
   chargeSpeed: 7
-  chargeDuration: 3.5
+  chargeDuration: 2
   walkSpeed: 3
   walkDistance: 1
   idleTime: 2.5

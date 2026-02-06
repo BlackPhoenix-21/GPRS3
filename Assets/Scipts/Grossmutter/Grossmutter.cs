@@ -102,12 +102,14 @@ public class Grossmutter : MonoBehaviour
             }
             rig2D.linearVelocity = Vector2.zero;
             anim.SetBool("Dash", false);
-            state = GrossmutterState.Idle;
-            chargTimer = chargCooldown;
-            idleTimer = idleTime;
-            isCharging = false;
-            chargingCoroutine = null;
-            print("xjkfjasfkjawk");
+            if (state == GrossmutterState.Charge)
+            {
+                state = GrossmutterState.Idle;
+                chargTimer = chargCooldown;
+                idleTimer = idleTime;
+                isCharging = false;
+                chargingCoroutine = null;
+            }
         }
 
         if (hit)
@@ -181,7 +183,7 @@ public class Grossmutter : MonoBehaviour
             chargingCoroutine = null;
             isCharging = false;
         }
-
+        anim.SetBool("Stunned", true);
         rig2D.linearVelocity = new Vector2(0, rig2D.linearVelocity.y);
         stunTimer = stunTime;
         chargTimer = chargCooldown;
