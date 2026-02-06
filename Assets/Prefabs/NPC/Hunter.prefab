@@ -117,7 +117,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 4035959289877228764, guid: 93e252ab808de1c4b9fe4f4a716d7eb9, type: 3}
-  m_Color: {r: 0.5176471, g: 0.05451757, b: 0.05451757, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -162,7 +162,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: -0.21, y: -0.06}
-  m_Size: {x: 3.31, y: 3.19}
+  m_Size: {x: 1, y: 2.5}
   m_Direction: 0
 --- !u!50 &8907785875478746523
 Rigidbody2D:
@@ -282,6 +282,7 @@ MonoBehaviour:
   minShootDistance: 1.2
   shootOffset: {x: 0.6, y: 0.2}
   sprite: {fileID: 0}
+  firstShotDelay: 5
 --- !u!1 &6163384290355272162
 GameObject:
   m_ObjectHideFlags: 0

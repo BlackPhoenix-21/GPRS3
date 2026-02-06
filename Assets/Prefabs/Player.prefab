@@ -566,6 +566,7 @@ MonoBehaviour:
     m_Bits: 8
   groundCheckDistance: 0.1
   fall: Wall
+  wall: Wall
   grounded: 0
   timerDash: 0
   timerDoubleJump: 0
@@ -653,7 +654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 810, y: 390}
+  m_AnchoredPosition: {x: 753, y: -349}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4889858182906356287
@@ -689,8 +690,8 @@ RectTransform:
   m_Children:
   - {fileID: 8213178047501923550}
   - {fileID: 4460792634527561100}
-  - {fileID: 7520008457419340303}
   - {fileID: 7699960752365900661}
+  - {fileID: 7520008457419340303}
   - {fileID: 2075197294172978053}
   m_Father: {fileID: 802236171080570506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1346,7 +1347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 750, y: -375}
+  m_AnchoredPosition: {x: 750, y: -342}
   m_SizeDelta: {x: 311.5, y: 154}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9023661909122492627

@@ -75,8 +75,8 @@ public class EnemyChaserHybrid2D : MonoBehaviour
 
     private void Awake()
     {
-     rb = GetComponent<Rigidbody2D>();
-      anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
         if (sprite == null) sprite = GetComponentInChildren<SpriteRenderer>();
     }
@@ -135,7 +135,7 @@ public class EnemyChaserHybrid2D : MonoBehaviour
 
         dir = dx >= 0 ? 1 : -1;
         if (sprite != null)
-        sprite.flipX = (dir < 0);
+            sprite.flipX = (dir < 0);
 
 
         if (IsOffscreen())

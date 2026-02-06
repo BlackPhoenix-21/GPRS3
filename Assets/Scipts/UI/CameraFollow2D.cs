@@ -12,6 +12,12 @@ public class CameraFollow2D : MonoBehaviour
     public float smoothTime = 0.2f;              // сглаживание (меньше = быстрее)
     public float lookAheadScale = 0.25f;         // упреждение по скорости
 
+    [Header("Position Limits")]
+    public float maxX = 235f;                    // максимальная X позиция
+    public float maxY = 12.5f;                    // максимальная Y позиция
+    public bool limitX = true;                   // включить ограничение по X
+    public bool limitY = false;                  // включить ограничение по Y
+
     [Header("Bounds (optional)")]
     public bool useBounds = false;
     public Collider2D levelBounds;               // BoxCollider2D с границами уровня
@@ -24,12 +30,6 @@ public class CameraFollow2D : MonoBehaviour
 
     void LateUpdate()
     {
-        if (transform.position.x >= 235)
-        {
-            transform.position = new Vector3(235, transform.position.y, -10);
-            return;
-        }
-
         if (!target)
             return;
 
@@ -50,6 +50,13 @@ public class CameraFollow2D : MonoBehaviour
         // ограничение по границам уровня
         if (useBounds && levelBounds)
             next = ClampToBounds(next);
+
+        // применяем жёсткие лимиты по X и Y
+        if (limitX && next.x > maxX)
+            next.x = maxX;
+
+        if (limitY && next.y > maxY)
+            next.y = maxY;
 
         transform.position = next;
     }
