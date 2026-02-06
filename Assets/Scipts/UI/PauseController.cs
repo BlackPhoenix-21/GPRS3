@@ -109,6 +109,6 @@ public class PauseController : MonoBehaviour
             Resume();
             GameManager.Instance.isPaused = false;
         }
-        SceneManager.LoadScene(menuSceneName);
+        SceneManager.LoadScene("MainMenu");
     }
 }

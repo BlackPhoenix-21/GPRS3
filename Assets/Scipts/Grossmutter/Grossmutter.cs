@@ -195,7 +195,10 @@ public class Grossmutter : MonoBehaviour
             GameManager.Instance.won = true;
             print("death");
             if (endPortal != null)
+            {
                 endPortal.ActivatePortal();
+                endPortal.StartCoroutine(endPortal.Finished());
+            }
             rig2D.linearVelocity = Vector2.zero;
 
             var col = GetComponent<Collider2D>();
@@ -210,11 +213,11 @@ public class Grossmutter : MonoBehaviour
     {
         isCharging = true;
         anim.SetTrigger("DashStart");
+        anim.SetBool("Dash", true);
         yield return new WaitForSeconds(chargingTime);
 
         float chargeTimer = 0f;
 
-        anim.SetBool("Dash", true);
         while (chargeTimer < chargeDuration)
         {
             rig2D.linearVelocity = new Vector2(chargeSpeed * rundir, rig2D.linearVelocity.y);

@@ -181,9 +181,9 @@ MonoBehaviour:
   state: 0
   mapBorder: 6.5
   chargCooldown: 6
-  chargingTime: 4
+  chargingTime: 2
   chargeSpeed: 7
-  chargeDuration: 1
+  chargeDuration: 1.5
   walkSpeed: 3
   walkDistance: 1
   idleTime: 2.5

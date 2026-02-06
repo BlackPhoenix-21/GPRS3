@@ -1,109 +1,10 @@
 fileFormatVersion: 2
-guid: ac9eea0e7f5c3674ba8ebf6196037ed0
+guid: 7727b73c729749e4c81ee6fa1deaa261
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7352339073622421304
-    second: Title_0
-  - first:
-      213: 578584420991164872
-    second: Title_1
-  - first:
-      213: -2586058674264470982
-    second: Title_2
-  - first:
-      213: -7455755055849233376
-    second: Title_3
-  - first:
-      213: -2920429353955323833
-    second: Title_4
-  - first:
-      213: -8183731707024800371
-    second: Title_5
-  - first:
-      213: -2698452132489872219
-    second: Title_6
-  - first:
-      213: -4950144012914721142
-    second: Title_7
-  - first:
-      213: 3188867983059848843
-    second: Title_8
-  - first:
-      213: 7852301220439587256
-    second: Title_9
-  - first:
-      213: 1883129450418887258
-    second: Title_10
-  - first:
-      213: 831226060202523121
-    second: Title_11
-  - first:
-      213: -5611296808718163769
-    second: Title_12
-  - first:
-      213: -2980618429333584377
-    second: Title_13
-  - first:
-      213: -6489994065110802945
-    second: Title_14
-  - first:
-      213: 1185279196486844169
-    second: Title_15
-  - first:
-      213: -8938237866032844517
-    second: Title_16
-  - first:
-      213: 7549936563529260177
-    second: Title_17
-  - first:
-      213: -3912535757841368806
-    second: Title_18
-  - first:
-      213: 7986414349913673620
-    second: Title_19
-  - first:
-      213: -5473989836383813982
-    second: Title_20
-  - first:
-      213: -3945733060299393030
-    second: Title_21
-  - first:
-      213: -8649738602703228084
-    second: Title_22
-  - first:
-      213: -5348464669708909733
-    second: Title_23
-  - first:
-      213: -4699841759642437723
-    second: Title_24
-  - first:
-      213: -9086561684665523175
-    second: Title_25
-  - first:
-      213: 1882604650658863205
-    second: Title_26
-  - first:
-      213: 6527579019921147228
-    second: Title_27
-  - first:
-      213: 7014816605549478080
-    second: Title_28
-  - first:
-      213: -3863732647898295551
-    second: Title_29
-  - first:
-      213: -5421475909282905177
-    second: Title_30
-  - first:
-      213: -6899762407534483280
-    second: Title_31
-  - first:
-      213: -5562957769956093291
-    second: Title_32
-  - first:
-      213: 8603381141915477333
-    second: Title_33
+      213: -8731040290883998937
+    second: House_BG_03_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -199,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Title_0
+      name: House_BG_03_0
       rect:
         serializedVersion: 2
-        x: 179
-        y: 733
-        width: 1206
-        height: 186
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8c0d280219e37f990800000000000000
-      internalID: -7352339073622421304
+      spriteID: 72b6c3e4d1d15d680800000000000000
+      internalID: -8731040290883998937
       vertices: []
       indices: 
       edges: []
@@ -224,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -234,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Title_0: -7352339073622421304
+      House_BG_03_0: -8731040290883998937
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

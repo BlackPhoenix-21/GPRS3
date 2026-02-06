@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class EndBookPortal : MonoBehaviour
@@ -21,8 +23,37 @@ public class EndBookPortal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        StopCoroutine(Finished());
         if (!activated) return;
         if (!other.CompareTag(playerTag)) return;
+
+        if (thanksPanel != null)
+            thanksPanel.SetActive(true);
+
+        Time.timeScale = 0f;
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        StopCoroutine(Finished());
+        if (!activated) return;
+        if (!other.CompareTag(playerTag)) return;
+
+        if (thanksPanel != null)
+            thanksPanel.SetActive(true);
+
+        Time.timeScale = 0f;
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public IEnumerator Finished()
+    {
+        yield return new WaitForSeconds(5f);
 
         if (thanksPanel != null)
             thanksPanel.SetActive(true);
