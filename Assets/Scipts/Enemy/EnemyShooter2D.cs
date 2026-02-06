@@ -18,7 +18,19 @@ public class EnemyShooter2D : MonoBehaviour
     [Header("Visual")]
     [SerializeField] private SpriteRenderer sprite;
 
+    [Header("Start Delay")]
+    [SerializeField] private float firstShotDelay = 5f;
+
+
     private float fireTimer;
+    private float startDelayTimer;
+    private bool canShoot;
+
+    private void Start()
+    {
+    startDelayTimer = firstShotDelay;
+    canShoot = false;
+    }
 
     private void Awake()
     {
@@ -29,6 +41,14 @@ public class EnemyShooter2D : MonoBehaviour
     [System.Obsolete]
     private void Update()
     {
+        if (!canShoot)
+        {
+            startDelayTimer -= Time.deltaTime;
+            if (startDelayTimer <= 0f)
+                canShoot = true;
+            else
+                return; 
+        }
         // найти игрока
         if (player == null)
         {
