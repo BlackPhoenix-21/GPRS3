@@ -8,6 +8,9 @@ public class BackMenu : MonoBehaviour
 
     public void BackToMenu()
     {
-        SceneManager.LoadScene(menuSceneName);
+        if (SceneManager.GetActiveScene().name == "BossLevel1")
+            SceneManager.LoadScene("BossLevel1");
+        else
+            SceneManager.LoadScene(menuSceneName);
     }
 }

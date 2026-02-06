@@ -25,7 +25,7 @@ public class Grossmutter : MonoBehaviour
     public float chargCooldown = 10f;
     public float chargingTime = 2f;
     public float chargeSpeed = 6f;
-    public float chargeDuration = 1.5f;
+    public float chargeDuration = 1f;
 
     [Header("Walk")]
     public float walkSpeed = 2f;
